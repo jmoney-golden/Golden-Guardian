@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Plain-English Medicare Glossary | Golden Guardian Insurance</title>
+    <meta name="description" content="A plain-English Medicare glossary from Golden Guardian Insurance. Premiums, deductibles, enrollment windows, and more — explained the way a friend would explain them.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════ RESET & TOKENS ═══════ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy: #1F2767;
+            --navy-light: #2B398F;
+            --navy-dark: #131641;
+            --gold: #975E25;
+            --gold-light: #BF8823;
+            --gold-bright: #FDC722;
+            --gold-pale: #F5ECD7;
+            --white: #FFFFFF;
+            --off-white: #F0EEEB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-500: #6B7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --font-display: 'EB Garamond', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --max-width: 1200px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            color: var(--gray-700);
+            line-height: 1.7;
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+        /* ═══════ NAV ═══════ */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(30, 32, 93, 0.97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201, 154, 46, 0.2);
+        }
+        .nav-inner {
+            display: flex; flex-direction: column; align-items: center;
+            max-width: var(--max-width); margin: 0 auto;
+            padding: 12px 24px 8px;
+        }
+        .nav-bottom {
+            display: flex; align-items: center; gap: 32px;
+            width: 100%; justify-content: center;
+        }
+        .nav-links {
+            display: flex; align-items: center; gap: 32px; list-style: none;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            font-size: 14px; font-weight: 500; letter-spacing: 0.3px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a.active { color: var(--gold-light); }
+        .nav-cta {
+            background: var(--gold-light) !important;
+            color: var(--white) !important;
+            padding: 10px 24px; border-radius: 6px;
+            font-weight: 600 !important;
+            transition: background 0.2s, transform 0.2s !important;
+        }
+        .nav-cta:hover {
+            background: var(--gold-bright) !important;
+            color: var(--navy) !important;
+            transform: translateY(-1px);
+        }
+        .mobile-toggle {
+            display: none; background: none; border: none;
+            color: var(--white); font-size: 28px; cursor: pointer;
+            position: absolute; right: 24px; top: 20px;
+        }
+
+        /* ═══════ HERO ═══════ */
+        .glossary-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 50%, var(--navy-light) 100%);
+            padding: 160px 0 80px;
+            position: relative; overflow: hidden;
+            color: var(--white);
+        }
+        .glossary-hero::before {
+            content: ''; position: absolute;
+            top: -50%; right: -20%; width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(201,154,46,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .glossary-hero::after {
+            content: ''; position: absolute;
+            bottom: -30%; left: -10%; width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(201,154,46,0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-inner { position: relative; z-index: 1; max-width: 820px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(201, 154, 46, 0.15);
+            border: 1px solid rgba(201, 154, 46, 0.3);
+            padding: 8px 16px; border-radius: 50px;
+            font-size: 13px; font-weight: 600;
+            color: var(--gold-light);
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+        .glossary-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 5.5vw, 60px);
+            font-weight: 800; line-height: 1.1; margin-bottom: 20px;
+        }
+        .glossary-hero h1 .gold { color: var(--gold-light); }
+        .glossary-hero p.lede {
+            font-size: 19px; color: rgba(255,255,255,0.78);
+            max-width: 700px;
+        }
+
+        /* ═══════ SEARCH + JUMP NAV ═══════ */
+        .toolbar {
+            background: var(--off-white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 28px 0;
+            position: sticky; top: 86px; z-index: 90;
+        }
+        .toolbar-inner {
+            display: flex; gap: 20px; align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-wrap {
+            flex: 1 1 320px; min-width: 280px;
+            position: relative;
+        }
+        .search-wrap input {
+            width: 100%;
+            border: 1px solid var(--gray-300);
+            background: var(--white);
+            border-radius: 8px;
+            padding: 14px 18px 14px 46px;
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--gray-900);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-wrap input:focus {
+            outline: none;
+            border-color: var(--gold-light);
+            box-shadow: 0 0 0 3px rgba(191,136,35,0.15);
+        }
+        .search-wrap svg {
+            position: absolute; top: 50%; left: 16px;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+            width: 20px; height: 20px;
+        }
+        .jump-list {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            list-style: none;
+        }
+        .jump-list a {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 6px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .jump-list a:hover {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+            transform: translateY(-1px);
+        }
+
+        /* ═══════ CONTENT ═══════ */
+        main.glossary {
+            padding: 60px 0 80px;
+            background: var(--white);
+        }
+        .intro-card {
+            background: var(--gold-pale);
+            border-left: 4px solid var(--gold-light);
+            border-radius: 8px;
+            padding: 28px 32px;
+            margin-bottom: 56px;
+            color: var(--gray-700);
+        }
+        .intro-card p { margin-bottom: 12px; }
+        .intro-card p:last-child { margin-bottom: 0; }
+        .intro-card a { color: var(--gold); font-weight: 600; border-bottom: 1px dotted var(--gold-light); }
+
+        .section-block { margin-bottom: 64px; scroll-margin-top: 180px; }
+        .section-heading {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 8px;
+        }
+        .section-number {
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: var(--gold-bright);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .section-block h2 {
+            font-family: var(--font-display);
+            font-size: clamp(26px, 3vw, 36px);
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+        .section-blurb {
+            color: var(--gray-500);
+            font-size: 16px;
+            margin: 8px 0 28px 60px;
+            max-width: 720px;
+        }
+
+        .term {
+            border-bottom: 1px solid var(--gray-200);
+            padding: 20px 0;
+            scroll-margin-top: 180px;
+        }
+        .term:last-child { border-bottom: none; }
+        .term-name {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .term-def { color: var(--gray-700); font-size: 16px; margin-bottom: 8px; }
+        .term-practice {
+            display: flex; gap: 10px;
+            margin-top: 10px;
+            padding: 12px 16px;
+            background: var(--gray-100);
+            border-radius: 6px;
+            font-size: 15px;
+            color: var(--gray-700);
+        }
+        .practice-label {
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 60px 24px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            color: var(--gray-500);
+        }
+        .no-results.visible { display: block; }
+        .no-results strong { color: var(--navy); display: block; font-size: 20px; margin-bottom: 6px; }
+
+        /* ═══════ STILL STUCK CTA ═══════ */
+        .still-stuck {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+            color: var(--white);
+            padding: 72px 0;
+            text-align: center;
+        }
+        .still-stuck h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 3.5vw, 40px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--white);
+        }
+        .still-stuck p {
+            color: rgba(255,255,255,0.8);
+            max-width: 640px;
+            margin: 0 auto 32px;
+            font-size: 17px;
+        }
+        .cta-buttons {
+            display: flex; gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn-primary { background: var(--gold-light); color: var(--white); }
+        .btn-primary:hover {
+            background: var(--gold-bright); color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(191,136,35,0.35);
+        }
+        .btn-outline {
+            background: transparent; color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ═══════ DISCLAIMER ═══════ */
+        .disclaimer {
+            background: var(--off-white);
+            padding: 40px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+        .disclaimer p {
+            font-size: 13px;
+            color: var(--gray-500);
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* ═══════ FOOTER ═══════ */
+        footer {
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.75);
+            padding: 48px 0 32px;
+        }
+        .footer-inner {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 16px;
+            text-align: center;
+        }
+        .footer-text { font-size: 13px; }
+        .footer-links {
+            display: flex; gap: 24px;
+            list-style: none; flex-wrap: wrap;
+            justify-content: center;
+        }
+        .footer-links a {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--gold); }
+
+        /* ═══════ RESPONSIVE ═══════ */
+        @media (max-width: 768px) {
+            .nav-bottom { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column;
+                position: absolute; top: 70px; left: 0; right: 0;
+                background: var(--navy-dark);
+                padding: 24px;
+                gap: 20px;
+            }
+            .mobile-toggle { display: block; }
+            .glossary-hero { padding: 130px 0 60px; }
+            .toolbar { top: 70px; }
+            .section-blurb { margin-left: 0; }
+            .section-number { width: 36px; height: 36px; font-size: 16px; }
+            .term-practice { flex-direction: column; gap: 4px; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════ NAVIGATION ═══════ -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <div class="nav-bottom">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#why">Why Us</a></li>
+                    <li><a href="index.html#providers">Providers</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="glossary.html" class="active">Glossary</a></li>
+                    <li><a href="index.html#contact" class="nav-cta">Get in Touch</a></li>
+                </ul>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">&#9776;</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════ HERO ═══════ -->
+    <header class="glossary-hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-badge">A Resource From Golden Guardian</div>
+                <h1>The Plain-English<br><span class="gold">Medicare Glossary</span></h1>
+                <p class="lede">The words you'll hear &mdash; in plain English, with the fine print stripped out. Every entry is written the way I'd explain it to a friend, not the way a policy document would word it.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════ TOOLBAR ═══════ -->
+    <div class="toolbar">
+        <div class="container">
+            <div class="toolbar-inner">
+                <div class="search-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg>
+                    <input type="search" id="glossarySearch" placeholder="Search a term &mdash; e.g. 'deductible', 'AEP', 'MOOP'" aria-label="Search the glossary">
+                </div>
+                <ul class="jump-list" aria-label="Jump to section">
+                    <li><a href="#sec-1">Basics</a></li>
+                    <li><a href="#sec-2">Parts A&ndash;D</a></li>
+                    <li><a href="#sec-3">Plan Types</a></li>
+                    <li><a href="#sec-4">Costs</a></li>
+                    <li><a href="#sec-5">Networks</a></li>
+                    <li><a href="#sec-6">Drugs</a></li>
+                    <li><a href="#sec-7">Enrollment</a></li>
+                    <li><a href="#sec-8">Help Paying</a></li>
+                    <li><a href="#sec-9">Mail</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ GLOSSARY ═══════ -->
+    <main class="glossary">
+        <div class="container">
+
+            <div class="intro-card">
+                <p>Health insurance uses a lot of words that sound alike but don't mean the same thing &mdash; deductible, copay, coinsurance, maximum out-of-pocket. This is a plain-English translator for the words you'll run into when you're on a call with a plan, reading a letter from Medicare, or sitting across from an agent.</p>
+                <p>Where it helps, I've added a short <strong>In practice</strong> line with a real-life example. If a word you need isn't here, email me at <a href="mailto:jonathan@goldenguardian.org">jonathan@goldenguardian.org</a> and I'll add it. That's how this glossary will grow.</p>
+            </div>
+
+            <!-- ────── SECTION 1 ────── -->
+            <section class="section-block" id="sec-1">
+                <div class="section-heading">
+                    <span class="section-number">1</span>
+                    <h2>The basics of Medicare</h2>
+                </div>
+
+                <div class="term" data-term="medicare">
+                    <div class="term-name">Medicare</div>
+                    <div class="term-def">The federal health insurance program for people 65 and older, plus people under 65 with certain disabilities or End-Stage Renal Disease. It's run by the Centers for Medicare &amp; Medicaid Services (CMS), not by an insurance company.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>When you "get Medicare" at 65, you're getting coverage through the government &mdash; not through your old employer's plan.</span></div>
+                </div>
+
+                <div class="term" data-term="cms centers for medicare medicaid services">
+                    <div class="term-name">CMS (Centers for Medicare &amp; Medicaid Services)</div>
+                    <div class="term-def">The federal agency that runs Medicare and Medicaid. They make the rules, set the payment rates, and review the insurance products that carriers sell as Medicare Advantage and Part D plans.</div>
+                </div>
+
+                <div class="term" data-term="original medicare traditional">
+                    <div class="term-name">Original Medicare <span style="color:var(--gray-500);font-weight:400;font-size:16px;">(a.k.a. Traditional Medicare)</span></div>
+                    <div class="term-def">Part A and Part B together &mdash; the government's version of Medicare, without any extra insurance company in the middle. It covers a lot but not everything, and there's no annual out-of-pocket maximum, which is why most people add either a Medicare Supplement or switch to a Medicare Advantage plan.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Original Medicare pays 80% of the approved amount for most outpatient care. The other 20% is on you, with no cap.</span></div>
+                </div>
+
+                <div class="term" data-term="medicare eligible">
+                    <div class="term-name">Medicare-Eligible</div>
+                    <div class="term-def">You're Medicare-eligible if you're 65 or older, or if you're under 65 and have received Social Security Disability payments for 24 months or have End-Stage Renal Disease or ALS.</div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 2 ────── -->
+            <section class="section-block" id="sec-2">
+                <div class="section-heading">
+                    <span class="section-number">2</span>
+                    <h2>The four parts of Medicare</h2>
+                </div>
+                <p class="section-blurb">Medicare is split into four parts. It's easier to remember this way: A is the hospital, B is the doctor, C is the all-in-one option, D is the pharmacy.</p>
+
+                <div class="term" data-term="part a hospital insurance">
+                    <div class="term-name">Part A &mdash; Hospital Insurance</div>
+                    <div class="term-def">Covers inpatient hospital stays, skilled nursing facility stays, hospice care, and some home health. Most people pay $0 premium for Part A because they (or a spouse) paid Medicare taxes while working.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If you're admitted to the hospital, that's Part A. If you're in the emergency room and go home, that's still Part B.</span></div>
+                </div>
+
+                <div class="term" data-term="part b medical insurance">
+                    <div class="term-name">Part B &mdash; Medical Insurance</div>
+                    <div class="term-def">Covers doctor visits, outpatient care, preventive services, lab work, durable medical equipment (wheelchairs, CPAP machines), and most of what isn't hospitalization. Part B has a monthly premium that all Medicare-eligible individuals pay. The premium is deducted from your Social Security check before you receive any funds &mdash; so you don't have to send a payment to Medicare each month. The Part B premium goes up each year. For 2026, the base premium is $202.90, but it can go up based on your annual income.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>The Annual Wellness Visit, a mammogram, or a pair of diabetic shoes are all Part B.</span></div>
+                </div>
+
+                <div class="term" data-term="part c medicare advantage">
+                    <div class="term-name">Part C &mdash; Medicare Advantage</div>
+                    <div class="term-def">An all-in-one plan sold by private insurance companies that replaces Original Medicare. It includes Parts A and B, usually Part D (prescription drugs), and often extras like dental, vision, hearing, OTC credits, and a gym benefit. You still have Medicare &mdash; you're just receiving it through a private plan that CMS pays to manage your care.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If you have a plan that sends you an insurance card with, for example, "Humana," "BCBS," or "Aetna" on it, that's Medicare Advantage.</span></div>
+                </div>
+
+                <div class="term" data-term="part d prescription drug coverage">
+                    <div class="term-name">Part D &mdash; Prescription Drug Coverage</div>
+                    <div class="term-def">The part of Medicare that pays for your medications. Part D comes either built into a Medicare Advantage plan or as a separate "standalone" plan that pairs with Original Medicare.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If your pharmacist asks "what's your prescription drug plan?", that's Part D.</span></div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 3 ────── -->
+            <section class="section-block" id="sec-3">
+                <div class="section-heading">
+                    <span class="section-number">3</span>
+                    <h2>The plan types you'll compare</h2>
+                </div>
+
+                <div class="term" data-term="medicare advantage plan ma">
+                    <div class="term-name">Medicare Advantage Plan (MA)</div>
+                    <div class="term-def">A Part C plan. One card, one phone number, often $0 premium, with built-in extras. You may have to use the insurance company's contracted providers (in-network) to get the most out of your policy and may need prior authorization for certain procedures.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Best fit for people who like one-stop shopping, want the extras (dental/OTC/fitness), no or lower premiums, and are comfortable using an in-network doctor list.</span></div>
+                </div>
+
+                <div class="term" data-term="medicare supplement medigap">
+                    <div class="term-name">Medicare Supplement <span style="color:var(--gray-500);font-weight:400;font-size:16px;">(a.k.a. Medigap)</span></div>
+                    <div class="term-def">A separate policy, sold by private carriers, that pays what Traditional Medicare doesn't pay. The benefits vary quite a bit &mdash; from covering just a little of what Traditional Medicare doesn't pay, all the way to covering everything Traditional Medicare doesn't. Check with your Golden Guardian agent to see which plan is right for you. Does not include prescription drugs &mdash; you'll need a standalone Part D plan alongside it.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Best fit for people who travel, want to see any doctor that takes Medicare without a network, and are willing to pay a higher monthly premium for fewer bills later.</span></div>
+                </div>
+
+                <div class="term" data-term="hmo health maintenance organization">
+                    <div class="term-name">HMO (Health Maintenance Organization)</div>
+                    <div class="term-def">A plan type that requires you to stay in a defined network of doctors and hospitals, and usually requires a primary care physician (PCP) who coordinates your care.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Lower out-of-pocket costs, tighter rules. You'll hear "HMO" most often in Medicare Advantage.</span></div>
+                </div>
+
+                <div class="term" data-term="ppo preferred provider organization">
+                    <div class="term-name">PPO (Preferred Provider Organization)</div>
+                    <div class="term-def">A plan type that lets you see in-network doctors at the lowest cost, and out-of-network doctors for a higher cost.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>More flexibility, higher premiums or copays. Common in Medicare Advantage.</span></div>
+                </div>
+
+                <div class="term" data-term="snp special needs plan dual chronic institutional">
+                    <div class="term-name">SNP (Special Needs Plan)</div>
+                    <div class="term-def">A Medicare Advantage plan designed for people with a specific condition (chronic SNP), people who qualify for both Medicare and Medicaid (dual SNP), or people living in a nursing facility (institutional SNP). Benefits are tailored to that group.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If you qualify as "dual-eligible," a dual SNP may offer richer benefits than a regular MA plan.</span></div>
+                </div>
+
+                <div class="term" data-term="standalone part d plan pdp">
+                    <div class="term-name">Standalone Part D Plan (PDP)</div>
+                    <div class="term-def">A prescription drug plan you buy separately when you have Original Medicare or a Medicare Supplement. Doesn't cover doctor visits or hospital stays &mdash; just your medications.</div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 4 ────── -->
+            <section class="section-block" id="sec-4">
+                <div class="section-heading">
+                    <span class="section-number">4</span>
+                    <h2>What you pay &mdash; the cost-share words</h2>
+                </div>
+                <p class="section-blurb">"Cost share" is the catch-all phrase for the money you pay versus what the insurance company pays. Every plan has some mix of the following.</p>
+
+                <div class="term" data-term="premium monthly">
+                    <div class="term-name">Premium</div>
+                    <div class="term-def">The monthly amount you pay just to have the coverage &mdash; whether you use it or not. Like a gym membership: it's a flat monthly bill.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Original Medicare Part B premium is $202.90/month in 2026. You pay your Part B premium whether you have Traditional Medicare or a Medicare Advantage policy. Many Medicare Advantage plans have a $0 premium on top of that.</span></div>
+                </div>
+
+                <div class="term" data-term="deductible">
+                    <div class="term-name">Deductible</div>
+                    <div class="term-def">A dollar amount you have to pay first each year before the plan starts paying its share. Once you've met the deductible, the plan picks up its portion.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If your plan has a $500 deductible, you pay the first $500 of covered bills, then the plan kicks in.</span></div>
+                </div>
+
+                <div class="term" data-term="copay copayment">
+                    <div class="term-name">Copay (Copayment)</div>
+                    <div class="term-def">A fixed dollar amount you pay for a specific service &mdash; for example, $10 for a primary care visit or $45 for a specialist.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Copays usually don't change if you've hit the deductible. They're a flat fee per visit.</span></div>
+                </div>
+
+                <div class="term" data-term="coinsurance">
+                    <div class="term-name">Coinsurance</div>
+                    <div class="term-def">A percentage of the bill you pay for a covered service &mdash; for example, 20% of the approved (contracted) amount for an MRI. Unlike a copay, it's tied to the size of the bill.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Original Medicare's signature cost share is 20% coinsurance on most Part B services, with no cap.</span></div>
+                </div>
+
+                <div class="term" data-term="moop maximum out of pocket">
+                    <div class="term-name">Maximum Out-of-Pocket (MOOP)</div>
+                    <div class="term-def">The most you'll pay for covered medical services in one calendar year. Once you hit it, the plan covers 100% of in-network medical costs for the rest of the year. Medicare Advantage plans are required to have a MOOP; Original Medicare doesn't.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>This is the single most important number on a Medicare Advantage summary. A plan with a $3,500 MOOP is very different from one with an $8,300 MOOP.</span></div>
+                </div>
+
+                <div class="term" data-term="allowed amount allowable charge">
+                    <div class="term-name">Allowed Amount (Allowable Charge)</div>
+                    <div class="term-def">The dollar amount Medicare or your plan has decided is fair for a given service. Your cost share is usually calculated off the allowed amount, not the provider's sticker price.</div>
+                </div>
+
+                <div class="term" data-term="cost share">
+                    <div class="term-name">Cost Share</div>
+                    <div class="term-def">A blanket term for every dollar the plan passes on to you &mdash; deductibles, copays, and coinsurance added together.</div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 5 ────── -->
+            <section class="section-block" id="sec-5">
+                <div class="section-heading">
+                    <span class="section-number">5</span>
+                    <h2>How you use the plan &mdash; networks, referrals, authorizations</h2>
+                </div>
+
+                <div class="term" data-term="provider network in network out of network">
+                    <div class="term-name">Provider Network</div>
+                    <div class="term-def">The list of doctors, hospitals, clinics, labs, and pharmacies that have a contract with your plan. In-network means lower cost. Out-of-network means higher cost, and sometimes no coverage at all.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Your Golden Guardian agent will check network status of every doctor or hospital you provide during the Annual Election Period (AEP) each fall. It's wise to confirm status during the year as networks can change.</span></div>
+                </div>
+
+                <div class="term" data-term="in network vs out of network">
+                    <div class="term-name">In-Network vs. Out-of-Network</div>
+                    <div class="term-def">In-network is "contracted with your plan." Out-of-network is "not contracted with your plan." On a Medicare Advantage HMO, out-of-network care may not be covered except in an emergency.</div>
+                </div>
+
+                <div class="term" data-term="primary care physician pcp">
+                    <div class="term-name">Primary Care Physician (PCP)</div>
+                    <div class="term-def">The main doctor who manages your overall care. On an HMO, your PCP is usually the starting point for referrals to specialists.</div>
+                </div>
+
+                <div class="term" data-term="referral">
+                    <div class="term-name">Referral</div>
+                    <div class="term-def">A formal okay from your PCP to see a specialist. Some plans require referrals; many Medicare Advantage PPOs don't.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If you've ever had a specialist office say "we need the referral on file before we can see you," this is what they mean.</span></div>
+                </div>
+
+                <div class="term" data-term="prior authorization pre auth">
+                    <div class="term-name">Prior Authorization (Pre-Auth)</div>
+                    <div class="term-def">The plan's advance approval for a specific service, medication, or device. The doctor's office submits the request and the plan says yes or no (or "yes, with conditions") based on medical necessity.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>A new CMS rule that took effect in 2026 requires faster turnaround: 7 days for standard requests and 72 hours for urgent ones.</span></div>
+                </div>
+
+                <div class="term" data-term="denial">
+                    <div class="term-name">Denial</div>
+                    <div class="term-def">The plan's decision not to pay for a service. Every denial can be appealed. A denial is not the end of the conversation &mdash; it's the start of one.</div>
+                </div>
+
+                <div class="term" data-term="appeal">
+                    <div class="term-name">Appeal</div>
+                    <div class="term-def">The formal process to ask the plan to reconsider a denial. There are multiple levels &mdash; starting with the plan itself, then moving up to an independent reviewer, then an administrative law judge, and so on. Deadlines are tight (typically 60 days), so if you get a denial letter, don't wait. Call your insurance company to understand their decision on the appeal.</div>
+                </div>
+
+                <div class="term" data-term="eob explanation of benefits">
+                    <div class="term-name">EOB (Explanation of Benefits)</div>
+                    <div class="term-def">A statement from the plan that tells you what was billed, what the plan paid, what you owe, and what your deductibles and out-of-pocket look like year-to-date. It is <em>not</em> a bill &mdash; it's a summary.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>Open every EOB. That's how errors get caught.</span></div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 6 ────── -->
+            <section class="section-block" id="sec-6">
+                <div class="section-heading">
+                    <span class="section-number">6</span>
+                    <h2>Prescription drug words</h2>
+                </div>
+
+                <div class="term" data-term="formulary">
+                    <div class="term-name">Formulary</div>
+                    <div class="term-def">The list of medications a plan covers, grouped into "tiers." Tier 1 is usually the cheapest (generics); tier 4 or 5 the most expensive (specialty drugs). Plans can change the formulary between years, which is why reviewing at AEP matters.</div>
+                </div>
+
+                <div class="term" data-term="tier">
+                    <div class="term-name">Tier</div>
+                    <div class="term-def">A category within the formulary that determines what you pay. The same drug can sit on different tiers at different plans, which is how two plans can cover the same medication and have very different costs.</div>
+                </div>
+
+                <div class="term" data-term="generic brand name">
+                    <div class="term-name">Generic vs. Brand-Name</div>
+                    <div class="term-def">A generic is the chemical equivalent of a brand-name drug, typically priced much lower. Generics usually sit on the lowest tiers. Brand-name drugs typically sit higher.</div>
+                </div>
+
+                <div class="term" data-term="mail order pharmacy">
+                    <div class="term-name">Mail-Order Pharmacy</div>
+                    <div class="term-def">A feature of most Part D plans that lets you get a 90-day supply of maintenance medications shipped to your home, usually at a lower copay than a 30-day retail fill.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If you're on the same three medications every month, mail-order almost always saves money.</span></div>
+                </div>
+
+                <div class="term" data-term="step therapy">
+                    <div class="term-name">Step Therapy</div>
+                    <div class="term-def">A plan rule that requires you to try a lower-cost drug first before it will cover the more expensive one. Common for biologics and specialty medications.</div>
+                </div>
+
+                <div class="term" data-term="true out of pocket troop">
+                    <div class="term-name">True Out-of-Pocket (TrOOP)</div>
+                    <div class="term-def">The running tally of what you've spent on covered drugs that counts toward the $2,100 annual cap.</div>
+                </div>
+
+                <div class="term" data-term="extra help low income subsidy lis">
+                    <div class="term-name">Extra Help (Low-Income Subsidy / LIS)</div>
+                    <div class="term-def">A federal program that lowers your Part D premiums, deductibles, and copays if you have a limited income. Most people who qualify don't know they do. Apply at <a href="https://ssa.gov/extrahelp" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;border-bottom:1px dotted var(--gold-light);">ssa.gov/extrahelp</a>.</div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 7 ────── -->
+            <section class="section-block" id="sec-7">
+                <div class="section-heading">
+                    <span class="section-number">7</span>
+                    <h2>Enrollment windows you need to know</h2>
+                </div>
+
+                <div class="term" data-term="initial enrollment period iep">
+                    <div class="term-name">Initial Enrollment Period (IEP)</div>
+                    <div class="term-def">The 7-month window around your 65th birthday when you first sign up for Medicare &mdash; 3 months before the month you turn 65, the month itself, and 3 months after. Missing it can cost you a permanent penalty.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If you're turning 65 in June, your window opens March 1 and closes September 30.</span></div>
+                </div>
+
+                <div class="term" data-term="annual enrollment period aep">
+                    <div class="term-name">Annual Enrollment Period (AEP)</div>
+                    <div class="term-def">October 15 through December 7 every year. This is the main window for Medicare Advantage and Part D changes. Any change you make here takes effect January 1.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If I'm going to help you compare plans, this is the season we do it in.</span></div>
+                </div>
+
+                <div class="term" data-term="open enrollment period oep medicare advantage">
+                    <div class="term-name">Open Enrollment Period (OEP) for Medicare Advantage</div>
+                    <div class="term-def">January 1 through March 31. A once-a-year chance, if you're already in a Medicare Advantage plan, to switch to a different MA plan or go back to Original Medicare. You can only use it once.</div>
+                </div>
+
+                <div class="term" data-term="special enrollment period sep">
+                    <div class="term-name">Special Enrollment Period (SEP)</div>
+                    <div class="term-def">A window triggered by a life event &mdash; moving out of a plan's service area, losing employer coverage, qualifying for Medicaid, and several other situations &mdash; that lets you enroll or switch outside the regular windows.</div>
+                </div>
+
+                <div class="term" data-term="late enrollment penalty lep">
+                    <div class="term-name">Late Enrollment Penalty (LEP)</div>
+                    <div class="term-def">A permanent surcharge added to your Part B or Part D premium if you didn't enroll when you were first eligible and didn't have other creditable coverage. Stays with you for life.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>This is the single most expensive mistake people make in the months around their 65th birthday.</span></div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 8 ────── -->
+            <section class="section-block" id="sec-8">
+                <div class="section-heading">
+                    <span class="section-number">8</span>
+                    <h2>Help paying for coverage</h2>
+                </div>
+
+                <div class="term" data-term="medicaid">
+                    <div class="term-name">Medicaid</div>
+                    <div class="term-def">A separate federal-and-state program for people with limited income and resources. You can have both Medicare and Medicaid at the same time &mdash; that's called being "dual-eligible," and it unlocks richer benefits.</div>
+                </div>
+
+                <div class="term" data-term="dual eligible">
+                    <div class="term-name">Dual-Eligible</div>
+                    <div class="term-def">Qualifying for both Medicare and Medicaid.</div>
+                </div>
+
+                <div class="term" data-term="medicare savings program msp">
+                    <div class="term-name">Medicare Savings Program (MSP)</div>
+                    <div class="term-def">A state-run program that helps pay your Part B premium (and sometimes deductibles and coinsurance) if your income is limited but you don't fully qualify for Medicaid.</div>
+                </div>
+
+                <div class="term" data-term="extra help lis">
+                    <div class="term-name">Extra Help (LIS)</div>
+                    <div class="term-def">See section 6 &mdash; the federal subsidy that reduces Part D drug costs for people with limited income.</div>
+                </div>
+
+                <div class="term" data-term="ship state health insurance assistance program">
+                    <div class="term-name">SHIP (State Health Insurance Assistance Program)</div>
+                    <div class="term-def">A free, unbiased counseling service in every state. They don't sell anything. If you ever want a second opinion on something I've told you, call your state's SHIP &mdash; I'll give you the number.</div>
+                </div>
+            </section>
+
+            <!-- ────── SECTION 9 ────── -->
+            <section class="section-block" id="sec-9">
+                <div class="section-heading">
+                    <span class="section-number">9</span>
+                    <h2>The letters and forms you'll get in the mail</h2>
+                </div>
+
+                <div class="term" data-term="anoc annual notice of change">
+                    <div class="term-name">ANOC (Annual Notice of Change)</div>
+                    <div class="term-def">A letter from your Medicare Advantage or Part D plan, mailed in September, that tells you everything changing for next year &mdash; premiums, copays, formulary, network, extras. This is the single most important piece of mail you'll get all year.</div>
+                    <div class="term-practice"><span class="practice-label">In practice</span><span>If a letter from your plan shows up in September or October, set it on the counter &mdash; don't toss it &mdash; and send me a photo of the first page.</span></div>
+                </div>
+
+                <div class="term" data-term="eoc evidence of coverage">
+                    <div class="term-name">EOC (Evidence of Coverage)</div>
+                    <div class="term-def">The long, detailed contract from your plan that describes every benefit and rule for the year. These documents can be 100+ pages. They are long, complicated, and not easy to understand. If you have a question about your coverage or something in your EOC, please reach out to your insurance company's customer service department or call your Golden Guardian agent for assistance.</div>
+                </div>
+
+                <div class="term" data-term="summary of benefits sb">
+                    <div class="term-name">Summary of Benefits (SB)</div>
+                    <div class="term-def">The short, user-friendly version of your plan's benefits. Good for comparison shopping.</div>
+                </div>
+
+                <div class="term" data-term="medicare summary notice msn">
+                    <div class="term-name">Medicare Summary Notice (MSN)</div>
+                    <div class="term-def">A quarterly statement from Original Medicare that lists the services Medicare paid for. Not a bill &mdash; a summary. The Medicare Advantage equivalent is the EOB.</div>
+                </div>
+
+                <div class="term" data-term="welcome to medicare packet">
+                    <div class="term-name">Welcome to Medicare Packet</div>
+                    <div class="term-def">A red-white-and-blue booklet that arrives 3 months before your 65th birthday (if you're on Social Security). It includes your Medicare card and a summary of your rights.</div>
+                </div>
+            </section>
+
+            <div class="no-results" id="noResults">
+                <strong>No matches yet.</strong>
+                Try a shorter word, an acronym (like "MOOP" or "AEP"), or email <a href="mailto:jonathan@goldenguardian.org" style="color:var(--gold);font-weight:600;">jonathan@goldenguardian.org</a> and I'll add it.
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ═══════ STILL STUCK CTA ═══════ -->
+    <section class="still-stuck">
+        <div class="container">
+            <h2>Still stuck on a word?</h2>
+            <p>That's what I'm here for. If a word in this glossary is still fuzzy &mdash; or if you're reading a letter and a term isn't defined here &mdash; reach out, and I'll either explain it or add it to the next version of this glossary.</p>
+            <div class="cta-buttons">
+                <a href="mailto:jonathan@goldenguardian.org" class="btn btn-primary">Email Jonathan</a>
+                <a href="tel:+18445344678" class="btn btn-outline">Call (844) 534-4678</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DISCLAIMER ═══════ -->
+    <section class="disclaimer">
+        <div class="container">
+            <p>This glossary is intended to be a plain-English reference. Specific plan rules, deadlines, and amounts are set by Medicare and your individual insurance carrier and may change year to year. Always confirm details with medicare.gov, 1-800-MEDICARE, your plan's member services, or your state's SHIP program before making a coverage decision. Golden Guardian Insurance is not affiliated with Medicare.</p>
+        </div>
+    </section>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-text">&copy; 2025-2026 Golden Guardian Insurance. All rights reserved.</div>
+                <ul class="footer-links">
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#providers">Providers</a></li>
+                    <li><a href="glossary.html">Glossary</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════ JAVASCRIPT ═══════ -->
+    <script>
+        // Mobile nav toggle
+        const toggle = document.getElementById('mobileToggle');
+        const links = document.getElementById('navLinks');
+        if (toggle) {
+            toggle.addEventListener('click', () => links.classList.toggle('open'));
+        }
+
+        // Live search filter
+        const search = document.getElementById('glossarySearch');
+        const terms = document.querySelectorAll('.term');
+        const sections = document.querySelectorAll('.section-block');
+        const noResults = document.getElementById('noResults');
+
+        function filterGlossary() {
+            const q = (search.value || '').toLowerCase().trim();
+            let totalMatches = 0;
+
+            sections.forEach(section => {
+                let sectionMatches = 0;
+                section.querySelectorAll('.term').forEach(term => {
+                    const keywords = (term.dataset.term || '') + ' ' + term.textContent.toLowerCase();
+                    const match = !q || keywords.toLowerCase().includes(q);
+                    term.style.display = match ? '' : 'none';
+                    if (match) { sectionMatches++; totalMatches++; }
+                });
+                section.style.display = sectionMatches > 0 ? '' : 'none';
+            });
+
+            if (q && totalMatches === 0) {
+                noResults.classList.add('visible');
+            } else {
+                noResults.classList.remove('visible');
+            }
+        }
+
+        if (search) {
+            search.addEventListener('input', filterGlossary);
+        }
+    </script>
+</body>
+</html>
