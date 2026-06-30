@@ -1044,27 +1044,14 @@
                                 <label for="cellPhone">Phone Number *</label>
                                 <input type="tel" id="cellPhone" name="cellPhone" required placeholder="(615) 555-0123">
                             </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="zip">Zip Code</label>
-                                    <input type="text" id="zip" name="zip" placeholder="37201" maxlength="10">
-                                </div>
-                                <div class="form-group">
-                                    <label for="interest">I'm Interested In</label>
-                                    <select id="interest" name="interest">
-                                        <option value="">Select one...</option>
-                                        <option value="Medicare guidance">Medicare guidance</option>
-                                        <option value="ACA Marketplace plans">ACA Marketplace plans</option>
-                                        <option value="Provider Partnerships">Provider Partnerships</option>
-                                        <option value="Other/Not Sure">Other/Not Sure</option>
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <label for="zip">Zip Code</label>
+                                <input type="text" id="zip" name="zip" placeholder="37201" maxlength="10">
                             </div>
-                            <!-- Anti-spam honeypot field - leave this here, do not remove -->
-                            <p style="display:none !important;">
-                                <label for="_Website">Website</label>
-                                <input type="text" name="_Website" value="" tabindex="-1" autocomplete="off">
-                            </p>
+                            <!-- Anti-spam honeypot: MUST submit empty. Hidden off-screen, no label, autofill disabled so real visitors' browsers can't fill it (a filled value makes AgencyBloc silently discard the lead). Do not remove. -->
+                            <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+                                <input type="text" name="_Website" id="ab_hp_field" tabindex="-1" autocomplete="off" value="">
+                            </div>
                             <button type="submit" class="form-submit">Send My Information &#8594;</button>
                             <div class="form-disclaimer">By submitting, you consent to being contacted by Golden Guardian Insurance. We respect your privacy and will never share your information.</div>
                         </form>
