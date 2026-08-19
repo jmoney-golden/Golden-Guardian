@@ -794,6 +794,36 @@
             .btn { width: 100%; justify-content: center; }
             .about-stats { flex-direction: column; gap: 20px; }
         }
+
+        /* ═══════════════════════════════════════
+           FOOTER COMPLIANCE DISCLAIMERS
+           ═══════════════════════════════════════ */
+        .footer-legal {
+            border-top: 1px solid rgba(255,255,255,0.14);
+            margin-top: 32px;
+            padding-top: 28px;
+        }
+        .footer-legal p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 12px;
+            max-width: 1000px;
+        }
+        .footer-legal p:last-child { margin-bottom: 0; }
+        .footer-legal strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+        .footer-legal a { color: var(--gold-bright); }
+        .footer-access {
+            background: rgba(255,255,255,0.06);
+            border-left: 4px solid var(--gold-bright);
+            border-radius: 0 6px 6px 0;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .footer-access p { color: rgba(255,255,255,0.8); font-size: 14px; margin: 0; }
+        @media (max-width: 720px) {
+            .footer-legal p { font-size: 12.5px; }
+        }
     </style>
 </head>
 <body>
@@ -806,7 +836,8 @@
                 <li><a href="#why">Why Us</a></li>
                 <li><a href="#providers">Providers</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="glossary.html">Glossary</a></li>
+                <li><a href="learn.html">Free Classes</a></li>
+                        <li><a href="glossary.html">Glossary</a></li>
                 <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
             </ul>
                 <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">&#9776;</button>
@@ -1081,9 +1112,24 @@
                 <ul class="footer-links">
                     <li><a href="#services">Services</a></li>
                     <li><a href="#providers">Providers</a></li>
+                    <li><a href="learn.html">Free Classes</a></li>
                     <li><a href="glossary.html">Glossary</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+            </div>
+
+            <div class="footer-legal">
+                <div class="footer-access">
+                    <p><strong>Deaf or hard of hearing?</strong> Dial <strong>711</strong> to reach the free national relay service and an operator will connect you to us at 844-534-4678. For accommodations of persons with special needs at meetings, call 844-534-4678 (TTY 711).</p>
+                </div>
+
+                <p><strong>Golden Guardian Insurance is not affiliated with or endorsed by Medicare, the Centers for Medicare &amp; Medicaid Services, or any government agency.</strong></p>
+
+                <p>We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1&#8209;800&#8209;MEDICARE (1&#8209;800&#8209;633&#8209;4227), 24 hours a day / 7 days a week, or your State Health Insurance Assistance Program, to get information on all of your options.</p>
+
+                <p>Our free community classes are educational events. <strong>They are for educational purposes only, and no plan&#8209;specific benefits or details are discussed at them.</strong> Nothing is sold at an educational event. Details and schedule at <a href="learn.html">goldenguardian.org/learn</a>.</p>
+
+                <p>Golden Guardian Insurance is a licensed insurance agency, licensed in Tennessee, Texas and Alabama. Enrollment in a plan may be limited to certain times of the year unless you qualify for a Special Enrollment Period.</p>
             </div>
         </div>
     </footer>
