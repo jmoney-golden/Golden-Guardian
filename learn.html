@@ -945,6 +945,23 @@
   .lrn-vid .date { font-family: var(--font-body); font-size: 15px; color: var(--gold-light); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
   .lrn-vid .ttl { font-size: 20px; line-height: 1.35; margin: 7px 0 9px; color: var(--navy); font-weight: 700; }
   .lrn-vid .desc { font-size: 16px; color: var(--gray-500); line-height: 1.45; }
+  .lrn-thumb { position: relative; padding: 0; border: 0; width: 100%; display: block; aspect-ratio: 16/9;
+    cursor: pointer; background: var(--navy); overflow: hidden; }
+  .lrn-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lrn-thumb .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .lrn-thumb .play i { display: block; width: 78px; height: 78px; border-radius: 50%;
+    background: var(--gold-bright); box-shadow: 0 4px 18px rgba(0,0,0,.45);
+    transition: transform .15s; position: relative; }
+  .lrn-thumb .play i::after { content: ''; position: absolute; top: 50%; left: 54%;
+    transform: translate(-50%,-50%); border-style: solid; border-width: 17px 0 17px 28px;
+    border-color: transparent transparent transparent var(--navy-dark); }
+  .lrn-thumb:hover .play i, .lrn-thumb:focus-visible .play i { transform: scale(1.09); }
+  .lrn-thumb:focus-visible { outline: 4px solid var(--gold-bright); outline-offset: 3px; }
+  .lrn-thumb iframe { width: 100%; aspect-ratio: 16/9; display: block; border: 0; }
+  .lrn-vid .yt { display: inline-block; margin-top: 10px; font-size: 15px; font-weight: 700;
+    color: var(--gold); border-bottom: 2px solid rgba(151,94,37,.3); }
+  .lrn-vid .yt:hover { border-bottom-color: var(--gold); }
+  .lrn-recnote { font-size: 17px; color: var(--gray-500); margin-bottom: 26px; }
   .lrn-note { background: var(--gold-pale); border-left: 8px solid var(--gold-bright); padding: 22px 26px; border-radius: 0 10px 10px 0; font-size: 19px; margin-bottom: 28px; }
 
   /* disclaimers */
@@ -1148,8 +1165,42 @@
   <div class="container">
     <h2>Watch any class, any time</h2>
     <p class="lrn-sub">Every class is recorded and posted here &mdash; free to watch, free to share, and nothing to sign up for.</p>
-    <div class="lrn-note"><b>Recordings are on their way.</b> We are re-recording the fall sessions so the posted versions are as clear and complete as the ones taught in the room. They will appear here as they are finished.</div>
-    <p class="lrn-sub" style="margin-bottom:0">In the meantime, every class is open to attend live online. The full schedule is <a href="#schedule" style="color:var(--gold);font-weight:700">further up this page</a>, and you are welcome to come to the same class twice.</p>
+    <p class="lrn-recnote">Recorded September 2026. Each one is the complete class, start to finish &mdash; the same presentation given live. Nothing is sold in any of them.</p>
+    <div class="lrn-vids">
+      <div class="lrn-vid">
+        <button type="button" class="lrn-thumb" data-yt="uaNkcd-y73k" aria-label="Play the video: Medicare 101: The A, B, C and Ds">
+          <img src="https://i.ytimg.com/vi/uaNkcd-y73k/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+          <span class="play" aria-hidden="true"><i></i></span>
+        </button>
+        <div class="meta">
+          <div class="ttl">Medicare 101: The A, B, C and Ds</div>
+          <div class="desc">What each of the four parts covers, how they fit together, and the enrollment deadlines that cost people money when they are missed.</div>
+          <a class="yt" href="https://www.youtube.com/watch?v=uaNkcd-y73k" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+        </div>
+      </div>
+      <div class="lrn-vid">
+        <button type="button" class="lrn-thumb" data-yt="Pe19VWrUBSI" aria-label="Play the video: Spotting Web and Phone Scams">
+          <img src="https://i.ytimg.com/vi/Pe19VWrUBSI/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+          <span class="play" aria-hidden="true"><i></i></span>
+        </button>
+        <div class="meta">
+          <div class="ttl">Spotting Web &amp; Phone Scams</div>
+          <div class="desc">How the con actually works, the four moves every scam shares, and exactly what to do when one reaches you.</div>
+          <a class="yt" href="https://www.youtube.com/watch?v=Pe19VWrUBSI" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+        </div>
+      </div>
+      <div class="lrn-vid">
+        <button type="button" class="lrn-thumb" data-yt="EoDQkbhXZhk" aria-label="Play the video: Budgeting for Seniors">
+          <img src="https://i.ytimg.com/vi/EoDQkbhXZhk/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+          <span class="play" aria-hidden="true"><i></i></span>
+        </button>
+        <div class="meta">
+          <div class="ttl">Budgeting for Seniors</div>
+          <div class="desc">Building a monthly budget on a fixed income, plus the benefit programs and discounts many people never claim.</div>
+          <a class="yt" href="https://www.youtube.com/watch?v=EoDQkbhXZhk" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+        </div>
+      </div>
+    </div>
     </div>
 </section>
 
@@ -1204,6 +1255,34 @@
                 }
             });
         });
+    </script>
+
+    <!-- ═══════ RECORDINGS: load the YouTube player only when someone clicks ═══════
+         Nothing is requested from YouTube until the visitor chooses to watch, and the
+         player runs on youtube-nocookie.com. To add a video, copy a .lrn-vid block and
+         change data-yt, the two URLs, the title and the description.                  -->
+    <script>
+    (function () {
+      // If YouTube's thumbnail CDN is unreachable, drop the broken image and let the
+      // navy panel and play button stand on their own.
+      document.querySelectorAll('.lrn-thumb img').forEach(function (img) {
+        img.addEventListener('error', function () { img.style.display = 'none'; });
+        if (img.complete && img.naturalWidth === 0) img.style.display = 'none';
+      });
+
+      document.querySelectorAll('.lrn-thumb[data-yt]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-yt');
+          var f = document.createElement('iframe');
+          f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+          f.title = btn.getAttribute('aria-label') || 'Video player';
+          f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+          f.allowFullscreen = true;
+          btn.replaceWith(f);
+          f.focus();
+        });
+      });
+    })();
     </script>
 
     <!-- ═══════ SCHEDULE: auto-advance the banner, grey out past classes ═══════
