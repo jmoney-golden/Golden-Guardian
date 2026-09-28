@@ -795,6 +795,12 @@
             .about-stats { flex-direction: column; gap: 20px; }
         }
     </style>
+    <!-- Privacy-friendly analytics by Plausible — no cookies, no personal data -->
+    <script defer src="https://plausible.io/js/pa-eXqr4wOUv6aKyxfj7iErm.js"></script>
+    <script>
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init()
+    </script>
 </head>
 <body>
 <nav id="navbar">
@@ -1257,6 +1263,53 @@
         });
     </script>
 
+
+    <!-- ═══════ ANALYTICS EVENTS ═══════
+         Fires named events into Plausible. Safe if Plausible is blocked or
+         removed — track() simply does nothing. No personal data is sent:
+         only the class name or the button that was pressed.              -->
+    <script>
+    (function () {
+      window.track = function (name, props) {
+        try { if (window.plausible) window.plausible(name, props ? { props: props } : undefined); }
+        catch (e) { /* analytics must never break the page */ }
+      };
+
+      function on(sel, fn) {
+        document.querySelectorAll(sel).forEach(function (el) { el.addEventListener('click', fn); });
+      }
+
+      // The single most important conversion: someone joining a live class.
+      on('.lrn-join', function () { track('Join Live Class'); });
+
+      // One-touch telephone dial-in.
+      on('.lrn-tap', function () { track('Phone Dial-In Tap'); });
+
+      // Chose YouTube over watching here.
+      on('.lrn-vid .yt', function (e) {
+        var card = e.currentTarget.closest('.lrn-vid');
+        var name = card ? (card.querySelector('.ttl') || {}).textContent : '';
+        track('Watch on YouTube', { video: (name || '').trim() });
+      });
+
+      // Optional reminder form actually submitted.
+      var form = document.querySelector('.lrn-form form');
+      if (form) form.addEventListener('submit', function () { track('Reminder Form Submitted'); });
+
+      // Did they get far enough down the page to see the videos at all?
+      var vids = document.querySelector('.lrn-vids');
+      if (vids && 'IntersectionObserver' in window) {
+        var seen = false;
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting && !seen) { seen = true; track('Saw Recordings'); io.disconnect(); }
+          });
+        }, { threshold: 0.3 });
+        io.observe(vids);
+      }
+    })();
+    </script>
+
     <!-- ═══════ RECORDINGS: load the YouTube player only when someone clicks ═══════
          Nothing is requested from YouTube until the visitor chooses to watch, and the
          player runs on youtube-nocookie.com. To add a video, copy a .lrn-vid block and
@@ -1273,6 +1326,9 @@
       document.querySelectorAll('.lrn-thumb[data-yt]').forEach(function (btn) {
         btn.addEventListener('click', function () {
           var id = btn.getAttribute('data-yt');
+          var card = btn.closest('.lrn-vid');
+          var name = card ? (card.querySelector('.ttl') || {}).textContent : '';
+          track('Video Play', { video: (name || id).trim() });
           var f = document.createElement('iframe');
           f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
           f.title = btn.getAttribute('aria-label') || 'Video player';
