@@ -801,6 +801,241 @@
       window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
       plausible.init()
     </script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PHONE OPTIMISATION
+     Added October 2026. Everything below sits inside a max-width media
+     query, so the desktop layout above 968px is completely untouched.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<style id="gg-mobile">
+/* The menu label rides inside the hamburger button and only ever shows
+   on a phone, where the button itself is visible. */
+.mt-label { display: none; }
+
+@media (max-width: 968px) {
+
+  /* ── 1. NAVIGATION ───────────────────────────────────────────────────
+     The menu never opened before: .nav-bottom was hidden, and the list of
+     links lives inside it, so toggling .open on the list could not bring
+     back a parent that was display:none. Showing the parent fixes it. */
+  .nav-bottom { display: block !important; width: 100%; }
+  .nav-links  { display: none; }
+
+  nav { position: relative; }
+  .nav-inner { min-height: 58px; padding: 10px 16px; justify-content: center; }
+
+  .mobile-toggle {
+    display: inline-flex !important; align-items: center; gap: 9px;
+    top: 9px; right: 12px;
+    min-height: 44px; padding: 6px 14px;
+    font-size: 23px; line-height: 1;
+    border-radius: 8px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.28);
+  }
+  .mobile-toggle:focus-visible { outline: 4px solid var(--gold-bright); outline-offset: 2px; }
+  .mt-label {
+    display: inline; font-family: var(--font-body);
+    font-size: 15px; font-weight: 600; letter-spacing: .4px;
+  }
+
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--navy);
+    padding: 8px 16px 18px; gap: 0;
+    border-bottom: 3px solid var(--gold-light);
+    box-shadow: 0 18px 44px rgba(0,0,0,.38);
+    z-index: 1200;
+    max-height: calc(100vh - 70px); overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links.open li { width: 100%; }
+  .nav-links.open a {
+    display: flex; align-items: center;
+    min-height: 54px; padding: 10px 6px;
+    font-size: 17px; color: #FFF;
+    border-bottom: 1px solid rgba(255,255,255,.13);
+  }
+  .nav-links.open li:last-child a { border-bottom: 0; }
+  .nav-links.open .nav-cta {
+    justify-content: center; margin-top: 14px;
+    min-height: 56px; font-size: 17px; border-radius: 8px;
+  }
+
+  /* ── 2. GLOBAL PHONE HOUSEKEEPING ────────────────────────────────── */
+  html { -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+  .container { padding-left: 18px; padding-right: 18px; }
+
+  /* 16px is the threshold below which iOS Safari zooms in when a field is
+     tapped. Anything smaller makes the form feel broken on an iPhone. */
+  input, select, textarea { font-size: 16px !important; max-width: 100%; }
+
+  h1, h2, h3 { overflow-wrap: break-word; }
+
+  /* ── 3. HOME PAGE ─────────────────────────────────────────────────── */
+  .trust-items     { grid-template-columns: 1fr 1fr; }
+  .services-grid,
+  .why-grid,
+  .providers-inner,
+  .about-inner,
+  .contact-inner,
+  .form-row        { grid-template-columns: 1fr; }
+  /* the navbar is fixed on desktop, so the logo banner carries an 85px shim.
+     On a phone the navbar is relative, which left that shim as dead space at
+     the very top of every page. */
+  .logo-banner { margin-top: 0; padding: 14px 0 12px; }
+  .logo-banner img { max-height: 84px; width: auto; }
+
+  /* ── 4. HELPFUL NUMBERS ───────────────────────────────────────────── */
+  .hlp-grid, .hlp-ecards { grid-template-columns: 1fr; }
+  .hlp-jump a { min-height: 48px; display: inline-flex; align-items: center; }
+
+  /* ── 5. GLOSSARY ──────────────────────────────────────────────────── */
+  .toolbar { position: static; padding: 18px 0; }
+  .toolbar-inner { flex-direction: column; align-items: stretch; gap: 14px; }
+  .search-wrap { min-width: 0; flex: 1 1 auto; }
+  .jump-list { gap: 7px; }
+  .jump-list a { min-height: 44px; display: inline-flex; align-items: center; }
+  .section-block, .term { scroll-margin-top: 20px; }
+
+  /* ── 6. FREE CLASSES ──────────────────────────────────────────────── */
+  .lrn-vids { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+
+  .container { padding-left: 16px; padding-right: 16px; }
+
+  /* One thumb, one column, one full-width button. */
+  .btn, .hero-buttons .btn, .cta-buttons .btn { width: 100%; justify-content: center; min-height: 54px; }
+  .hero-buttons, .cta-buttons { flex-direction: column; }
+  .about-stats { flex-direction: column; gap: 18px; }
+  .trust-items { grid-template-columns: 1fr 1fr; gap: 22px; }
+
+  /* Helpful Numbers — the numbers themselves stay big and tappable. */
+  .hlp-hero { padding: 44px 0 38px; }
+  .hlp-hero h1 { font-size: 34px; }
+  .hlp-hero .lede { font-size: 18px; }
+  .hlp-jump { flex-direction: column; gap: 10px; }
+  .hlp-jump a { justify-content: center; }
+  .hlp-911 h2 { font-size: 30px; }
+  .hlp-sec > .container > h2 { font-size: 30px; }
+  .hlp-sub { font-size: 17px; }
+  .hlp-item { padding: 18px 18px; }
+  .hlp-item .num { font-size: 27px; }
+  .hlp-item .num a { display: inline-block; padding: 4px 0; }
+  .hlp-item .web { font-size: 19px; }
+  .hlp-item .what, .hlp-item .alt2 { font-size: 16px; }
+  .hlp-ecard { padding: 20px 20px 18px; }
+  .hlp-ecard .big { font-size: 42px; }
+  .hlp-who { padding: 22px 20px; }
+  .hlp-who h3 { font-size: 23px; }
+  .hlp-print button { width: 100%; }
+
+  /* Glossary */
+  .glossary-hero { padding: 110px 0 44px; }
+  .section-blurb { margin-left: 0; }
+  .term-practice { flex-direction: column; gap: 5px; }
+  .intro-card { padding: 20px 20px; }
+
+  /* Footer */
+  .footer-links { gap: 14px 20px; flex-wrap: wrap; justify-content: center; }
+  .footer-links a { min-height: 40px; display: inline-flex; align-items: center; }
+  .footer-legal p { font-size: 13px; }
+}
+</style>
+
+<style id="gg-learn-watch">
+/* ══ Watch-now opening section (October 2026) ══ */
+.lrn-watch { background: linear-gradient(168deg, #232C76 0%, var(--navy-dark) 100%);
+  color: var(--white); padding: 50px 0 54px; }
+.lrn-watch .section-label { color: var(--gold-bright); }
+.lrn-watch h1 { font-family: var(--font-display); font-size: 50px; line-height: 1.1;
+  color: var(--white); font-weight: 700; margin: 10px 0 16px; }
+.lrn-wsub { font-size: 20px; line-height: 1.55; color: #C9CFEA; max-width: 760px; margin-bottom: 30px; }
+.lrn-watch .lrn-vids { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.lrn-watch .lrn-vid { background: rgba(255,255,255,.07); border: 2px solid rgba(255,255,255,.20); }
+.lrn-watch .lrn-vid .ttl { color: var(--white); }
+.lrn-watch .lrn-vid .desc { color: #B7C0E6; }
+.lrn-watch .lrn-vid .yt { color: var(--gold-bright); border-bottom-color: rgba(253,199,34,.4); }
+.lrn-watch .lrn-vid .yt:hover { border-bottom-color: var(--gold-bright); }
+.lrn-wnote { font-size: 15.5px; line-height: 1.6; color: #9AA4D2; max-width: 860px; margin-top: 24px; }
+.lrn-wnote b { color: #DDE3FA; }
+.lrn-alsobar { margin-top: 26px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.16);
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 18px; color: #C9CFEA; }
+.lrn-alsobtn { display: inline-flex; align-items: center; min-height: 50px; padding: 10px 24px;
+  border: 2px solid rgba(253,199,34,.55); border-radius: 8px; color: var(--gold-bright);
+  font-weight: 700; font-size: 17px; text-decoration: none; transition: background .18s; }
+.lrn-alsobtn:hover { background: rgba(253,199,34,.16); }
+.lrn-alsobtn:focus-visible { outline: 4px solid var(--gold-bright); outline-offset: 3px; }
+
+/* the labelled play button — works even if the thumbnail never loads */
+.lrn-playbtn { display: flex; width: 100%; align-items: center; justify-content: center; gap: 12px;
+  min-height: 58px; margin-top: 16px; padding: 12px 18px;
+  background: var(--gold-bright); color: var(--navy-dark);
+  font-family: var(--font-body); font-size: 18px; font-weight: 700; letter-spacing: .2px;
+  border: 0; border-bottom: 4px solid #D9A400; border-radius: 9px; cursor: pointer;
+  transition: transform .14s, background .14s; }
+.lrn-playbtn:hover { background: #FFD44A; transform: translateY(-1px); }
+.lrn-playbtn:focus-visible { outline: 4px solid var(--white); outline-offset: 3px; }
+.lrn-playbtn .tri { width: 0; height: 0; border-left: 15px solid var(--navy-dark);
+  border-top: 9px solid transparent; border-bottom: 9px solid transparent; }
+
+/* thumbnail fallback when YouTube's image CDN cannot be reached */
+.lrn-thumb.noimg { background: linear-gradient(145deg, #2A3488 0%, #161C4D 100%); }
+.lrn-thumb.noimg img { display: none; }
+.lrn-thumb .fbk { display: none; position: absolute; left: 0; right: 0; bottom: 14px;
+  text-align: center; color: var(--gold-bright); font-family: var(--font-body);
+  font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.lrn-thumb.noimg .fbk { display: block; }
+
+/* ══ phone ══ */
+@media (max-width: 968px) {
+  /* the fixed navbar is relative on a phone, so the 85px shim it needed is
+     pure dead space — that was the whole first screen before anything loaded */
+  .logo-banner { margin-top: 0; padding: 14px 0 12px; }
+  .logo-banner img { max-height: 76px; width: auto; }
+  .lrn-watch .lrn-vids { grid-template-columns: 1fr; gap: 18px; }
+  .lrn-alsobar { flex-direction: column; align-items: stretch; text-align: center; }
+  .lrn-alsobtn { justify-content: center; }
+}
+@media (max-width: 640px) {
+  .lrn-watch { padding: 26px 0 34px; }
+  .lrn-watch h1 { font-size: 32px; }
+  .lrn-watch h1 br { display: none; }
+  .lrn-wsub { font-size: 17px; margin-bottom: 20px; }
+  .lrn-watch .section-label { font-size: 12px; letter-spacing: 2px; }
+  .lrn-vid .meta { padding: 15px 16px 17px; }
+  .lrn-vid .ttl { font-size: 19px; }
+  .lrn-vid .desc { font-size: 15.5px; }
+  .lrn-playbtn { min-height: 56px; font-size: 17.5px; }
+  .lrn-wnote { font-size: 14.5px; }
+
+  /* the rest of the page, further down */
+  .lrn-hero { padding: 34px 0 36px; }
+  .lrn-hero h1 { font-size: 30px; }
+  .lrn-hero .lede { font-size: 17px; margin-bottom: 24px; }
+  .lrn-join { font-size: 20px; padding: 17px 20px; width: 100%; justify-content: center; }
+  .lrn-phonebox { padding: 18px 16px; margin-top: 26px; }
+  .lrn-phonebox .num { font-size: 24px; }
+  .lrn-sec { padding: 38px 0; }
+  .lrn-sec h2 { font-size: 27px; }
+  .lrn-sub { font-size: 17px; margin-bottom: 22px; }
+  .lrn-step { padding: 16px 16px; gap: 14px; }
+  .lrn-step .n { flex: 0 0 42px; height: 42px; font-size: 20px; }
+  .lrn-step b { font-size: 18px; }
+  .lrn-step span { font-size: 17px; }
+  .lrn-next { padding: 18px 0; }
+  .lrn-next .tag { display: block; margin: 0 auto 10px; width: fit-content; }
+  .lrn-next .what { font-size: 18px; }
+  .lrn-form { padding: 18px 16px; }
+  .lrn-tap, .lrn-submit { width: 100%; justify-content: center; text-align: center; }
+}
+</style>
 </head>
 <body>
 <nav id="navbar">
@@ -816,7 +1051,7 @@
 <li><a href="help.html">Helpful Numbers</a></li>
                 <li><a href="index.html#contact" class="nav-cta">Get in Touch</a></li>
             </ul>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">&#9776;</button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Open the menu" aria-expanded="false"><span aria-hidden="true">&#9776;</span><span class="mt-label">Menu</span></button>
             </div>
         </div>
     </nav>
@@ -986,6 +1221,70 @@
 </style>
 
 <div class="lrn">
+
+
+<!-- ══════════════════ WATCH NOW ══════════════════
+     Moved to the top of the page in October 2026. Ad traffic arrives here
+     expecting the recordings, so the recordings are the first thing on the
+     page. The live-class material follows underneath.                     -->
+<section class="lrn-watch" id="watch">
+  <div class="container">
+    <div class="section-label">FREE &middot; NOTHING TO SIGN UP FOR</div>
+    <h1>Watch a Medicare class <br>right now</h1>
+    <p class="lrn-wsub">Three complete classes, recorded and free to watch at your own kitchen
+      table. No sign-up, no email address, no phone number &mdash; and nobody calls you afterward.</p>
+
+    <div class="lrn-vids">
+      <article class="lrn-vid">
+        <button type="button" class="lrn-thumb" data-yt="uaNkcd-y73k" aria-label="Play the video: Medicare 101: The A, B, C and Ds">
+          <img src="https://i.ytimg.com/vi/uaNkcd-y73k/hqdefault.jpg" alt="" width="480" height="360" loading="eager" decoding="async">
+          <span class="play" aria-hidden="true"><i></i></span><span class="fbk" aria-hidden="true">Press to play</span>
+        </button>
+        <div class="meta">
+          <div class="ttl">Medicare 101: The A, B, C and Ds</div>
+          <div class="desc">What each of the four parts covers, how they fit together, and the enrollment deadlines that cost people money when they are missed.</div>
+          
+          <button type="button" class="lrn-playbtn" data-yt="uaNkcd-y73k" aria-label="Play the class: Medicare 101: The A, B, C and Ds"><span class="tri" aria-hidden="true"></span>Watch this class</button>
+          <a class="yt" href="https://www.youtube.com/watch?v=uaNkcd-y73k" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+        </div>
+      </article>
+      <article class="lrn-vid">
+        <button type="button" class="lrn-thumb" data-yt="Pe19VWrUBSI" aria-label="Play the video: Spotting Web and Phone Scams">
+          <img src="https://i.ytimg.com/vi/Pe19VWrUBSI/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <span class="play" aria-hidden="true"><i></i></span><span class="fbk" aria-hidden="true">Press to play</span>
+        </button>
+        <div class="meta">
+          <div class="ttl">Spotting Web &amp; Phone Scams</div>
+          <div class="desc">How the con actually works, the four moves every scam shares, and exactly what to do when one reaches you.</div>
+          
+          <button type="button" class="lrn-playbtn" data-yt="Pe19VWrUBSI" aria-label="Play the class: Spotting Web &amp; Phone Scams"><span class="tri" aria-hidden="true"></span>Watch this class</button>
+          <a class="yt" href="https://www.youtube.com/watch?v=Pe19VWrUBSI" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+        </div>
+      </article>
+      <article class="lrn-vid">
+        <button type="button" class="lrn-thumb" data-yt="EoDQkbhXZhk" aria-label="Play the video: Budgeting for Seniors">
+          <img src="https://i.ytimg.com/vi/EoDQkbhXZhk/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <span class="play" aria-hidden="true"><i></i></span><span class="fbk" aria-hidden="true">Press to play</span>
+        </button>
+        <div class="meta">
+          <div class="ttl">Budgeting for Seniors</div>
+          <div class="desc">Building a monthly budget on a fixed income, plus the benefit programs and discounts many people never claim.</div>
+          
+          <button type="button" class="lrn-playbtn" data-yt="EoDQkbhXZhk" aria-label="Play the class: Budgeting for Seniors"><span class="tri" aria-hidden="true"></span>Watch this class</button>
+          <a class="yt" href="https://www.youtube.com/watch?v=EoDQkbhXZhk" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+        </div>
+      </article>
+    </div>
+
+    <p class="lrn-wnote">Recorded September 2026. Each one is the complete class, start to
+      finish &mdash; the same presentation given live. <b>Nothing is sold in any of them.</b></p>
+
+    <div class="lrn-alsobar">
+      <span>Would you rather come to a live one and ask questions?</span>
+      <a class="lrn-alsobtn" href="#join">See the live classes &darr;</a>
+    </div>
+  </div>
+</section>
 
 <section class="lrn-hero" id="join">
   <div class="container">
@@ -1167,49 +1466,6 @@
   </div>
 </section>
 
-<section class="lrn-sec">
-  <div class="container">
-    <h2>Watch any class, any time</h2>
-    <p class="lrn-sub">Every class is recorded and posted here &mdash; free to watch, free to share, and nothing to sign up for.</p>
-    <p class="lrn-recnote">Recorded September 2026. Each one is the complete class, start to finish &mdash; the same presentation given live. Nothing is sold in any of them.</p>
-    <div class="lrn-vids">
-      <div class="lrn-vid">
-        <button type="button" class="lrn-thumb" data-yt="uaNkcd-y73k" aria-label="Play the video: Medicare 101: The A, B, C and Ds">
-          <img src="https://i.ytimg.com/vi/uaNkcd-y73k/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
-          <span class="play" aria-hidden="true"><i></i></span>
-        </button>
-        <div class="meta">
-          <div class="ttl">Medicare 101: The A, B, C and Ds</div>
-          <div class="desc">What each of the four parts covers, how they fit together, and the enrollment deadlines that cost people money when they are missed.</div>
-          <a class="yt" href="https://www.youtube.com/watch?v=uaNkcd-y73k" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
-        </div>
-      </div>
-      <div class="lrn-vid">
-        <button type="button" class="lrn-thumb" data-yt="Pe19VWrUBSI" aria-label="Play the video: Spotting Web and Phone Scams">
-          <img src="https://i.ytimg.com/vi/Pe19VWrUBSI/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
-          <span class="play" aria-hidden="true"><i></i></span>
-        </button>
-        <div class="meta">
-          <div class="ttl">Spotting Web &amp; Phone Scams</div>
-          <div class="desc">How the con actually works, the four moves every scam shares, and exactly what to do when one reaches you.</div>
-          <a class="yt" href="https://www.youtube.com/watch?v=Pe19VWrUBSI" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
-        </div>
-      </div>
-      <div class="lrn-vid">
-        <button type="button" class="lrn-thumb" data-yt="EoDQkbhXZhk" aria-label="Play the video: Budgeting for Seniors">
-          <img src="https://i.ytimg.com/vi/EoDQkbhXZhk/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
-          <span class="play" aria-hidden="true"><i></i></span>
-        </button>
-        <div class="meta">
-          <div class="ttl">Budgeting for Seniors</div>
-          <div class="desc">Building a monthly budget on a fixed income, plus the benefit programs and discounts many people never claim.</div>
-          <a class="yt" href="https://www.youtube.com/watch?v=EoDQkbhXZhk" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
-        </div>
-      </div>
-    </div>
-    </div>
-</section>
-
 <section class="lrn-disc">
   <div class="container">
     <p><b>This event is for educational purposes only. No plan-specific benefits or details will be discussed.</b></p>
@@ -1237,13 +1493,13 @@
     </footer>
 <script>
         // Mobile nav toggle
-        const toggle = document.getElementById('mobileToggle');
-        const links = document.getElementById('navLinks');
-        toggle.addEventListener('click', () => links.classList.toggle('open'));
-        // Close mobile nav on link click
-        links.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => links.classList.remove('open'));
-        });
+        // Mobile menu is handled by the gg-mobile script at the end of this
+        // page (October 2026). The old handler below toggled the same class,
+        // so leaving both in place cancelled every tap out. Kept as a comment
+        // so it is obvious what replaced it.
+        //   const toggle = document.getElementById('mobileToggle');
+        //   const links = document.getElementById('navLinks');
+        //   toggle.addEventListener('click', () => links.classList.toggle('open'));
         // Navbar scroll effect
         const nav = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -1448,5 +1704,79 @@
         '</b> &mdash; ' + titleText.replace(/&/g, '&amp;') + ', online';
     })();
     </script>
+
+<!-- Mobile menu behaviour: open/close, ARIA state, close on choosing a link,
+     close on Escape, close on tapping outside. -->
+<script>
+(function () {
+  var btn  = document.getElementById('mobileToggle');
+  var menu = document.getElementById('navLinks');
+  if (!btn || !menu) return;
+
+  function setOpen(open) {
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var lbl = btn.querySelector('.mt-label');
+    if (lbl) lbl.textContent = open ? 'Close' : 'Menu';
+  }
+
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'navLinks');
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!menu.classList.contains('open'));
+  });
+
+  menu.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!menu.classList.contains('open')) return;
+    if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+
+  // If the phone is turned sideways into desktop width, drop the menu state.
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 968) setOpen(false);
+  });
+})();
+</script>
+
+<!-- The gold "Watch this class" button drives the same facade as the thumbnail,
+     so the existing analytics event and the privacy-preserving embed both still
+     apply. Also upgrades the thumbnail fallback: try a second YouTube image size
+     before giving up, and label the panel if neither arrives. -->
+<script>
+(function () {
+  document.querySelectorAll('.lrn-playbtn[data-yt]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var card = b.closest('.lrn-vid');
+      var thumb = card && card.querySelector('.lrn-thumb[data-yt]');
+      if (thumb) { thumb.click(); thumb.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+    });
+  });
+
+  document.querySelectorAll('.lrn-thumb img').forEach(function (img) {
+    var tried = false;
+    function fail() {
+      var btn = img.closest('.lrn-thumb');
+      if (!tried && /hqdefault/.test(img.src)) {
+        tried = true;
+        img.src = img.src.replace('hqdefault', 'mqdefault');
+        return;
+      }
+      if (btn) btn.classList.add('noimg');
+    }
+    img.addEventListener('error', fail);
+    if (img.complete && img.naturalWidth === 0) fail();
+  });
+})();
+</script>
 </body>
 </html>
