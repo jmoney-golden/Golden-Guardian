@@ -831,6 +831,152 @@
       window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
       plausible.init()
     </script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PHONE OPTIMISATION
+     Added October 2026. Everything below sits inside a max-width media
+     query, so the desktop layout above 968px is completely untouched.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<style id="gg-mobile">
+/* The menu label rides inside the hamburger button and only ever shows
+   on a phone, where the button itself is visible. */
+.mt-label { display: none; }
+
+@media (max-width: 968px) {
+
+  /* ── 1. NAVIGATION ───────────────────────────────────────────────────
+     The menu never opened before: .nav-bottom was hidden, and the list of
+     links lives inside it, so toggling .open on the list could not bring
+     back a parent that was display:none. Showing the parent fixes it. */
+  .nav-bottom { display: block !important; width: 100%; }
+  .nav-links  { display: none; }
+
+  nav { position: relative; }
+  .nav-inner { min-height: 58px; padding: 10px 16px; justify-content: center; }
+
+  .mobile-toggle {
+    display: inline-flex !important; align-items: center; gap: 9px;
+    top: 9px; right: 12px;
+    min-height: 44px; padding: 6px 14px;
+    font-size: 23px; line-height: 1;
+    border-radius: 8px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.28);
+  }
+  .mobile-toggle:focus-visible { outline: 4px solid var(--gold-bright); outline-offset: 2px; }
+  .mt-label {
+    display: inline; font-family: var(--font-body);
+    font-size: 15px; font-weight: 600; letter-spacing: .4px;
+  }
+
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--navy);
+    padding: 8px 16px 18px; gap: 0;
+    border-bottom: 3px solid var(--gold-light);
+    box-shadow: 0 18px 44px rgba(0,0,0,.38);
+    z-index: 1200;
+    max-height: calc(100vh - 70px); overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links.open li { width: 100%; }
+  .nav-links.open a {
+    display: flex; align-items: center;
+    min-height: 54px; padding: 10px 6px;
+    font-size: 17px; color: #FFF;
+    border-bottom: 1px solid rgba(255,255,255,.13);
+  }
+  .nav-links.open li:last-child a { border-bottom: 0; }
+  .nav-links.open .nav-cta {
+    justify-content: center; margin-top: 14px;
+    min-height: 56px; font-size: 17px; border-radius: 8px;
+  }
+
+  /* ── 2. GLOBAL PHONE HOUSEKEEPING ────────────────────────────────── */
+  html { -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+  .container { padding-left: 18px; padding-right: 18px; }
+
+  /* 16px is the threshold below which iOS Safari zooms in when a field is
+     tapped. Anything smaller makes the form feel broken on an iPhone. */
+  input, select, textarea { font-size: 16px !important; max-width: 100%; }
+
+  h1, h2, h3 { overflow-wrap: break-word; }
+
+  /* ── 3. HOME PAGE ─────────────────────────────────────────────────── */
+  .trust-items     { grid-template-columns: 1fr 1fr; }
+  .services-grid,
+  .why-grid,
+  .providers-inner,
+  .about-inner,
+  .contact-inner,
+  .form-row        { grid-template-columns: 1fr; }
+  /* the navbar is fixed on desktop, so the logo banner carries an 85px shim.
+     On a phone the navbar is relative, which left that shim as dead space at
+     the very top of every page. */
+  .logo-banner { margin-top: 0; padding: 14px 0 12px; }
+  .logo-banner img { max-height: 84px; width: auto; }
+
+  /* ── 4. HELPFUL NUMBERS ───────────────────────────────────────────── */
+  .hlp-grid, .hlp-ecards { grid-template-columns: 1fr; }
+  .hlp-jump a { min-height: 48px; display: inline-flex; align-items: center; }
+
+  /* ── 5. GLOSSARY ──────────────────────────────────────────────────── */
+  .toolbar { position: static; padding: 18px 0; }
+  .toolbar-inner { flex-direction: column; align-items: stretch; gap: 14px; }
+  .search-wrap { min-width: 0; flex: 1 1 auto; }
+  .jump-list { gap: 7px; }
+  .jump-list a { min-height: 44px; display: inline-flex; align-items: center; }
+  .section-block, .term { scroll-margin-top: 20px; }
+
+  /* ── 6. FREE CLASSES ──────────────────────────────────────────────── */
+  .lrn-vids { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+
+  .container { padding-left: 16px; padding-right: 16px; }
+
+  /* One thumb, one column, one full-width button. */
+  .btn, .hero-buttons .btn, .cta-buttons .btn { width: 100%; justify-content: center; min-height: 54px; }
+  .hero-buttons, .cta-buttons { flex-direction: column; }
+  .about-stats { flex-direction: column; gap: 18px; }
+  .trust-items { grid-template-columns: 1fr 1fr; gap: 22px; }
+
+  /* Helpful Numbers — the numbers themselves stay big and tappable. */
+  .hlp-hero { padding: 44px 0 38px; }
+  .hlp-hero h1 { font-size: 34px; }
+  .hlp-hero .lede { font-size: 18px; }
+  .hlp-jump { flex-direction: column; gap: 10px; }
+  .hlp-jump a { justify-content: center; }
+  .hlp-911 h2 { font-size: 30px; }
+  .hlp-sec > .container > h2 { font-size: 30px; }
+  .hlp-sub { font-size: 17px; }
+  .hlp-item { padding: 18px 18px; }
+  .hlp-item .num { font-size: 27px; }
+  .hlp-item .num a { display: inline-block; padding: 4px 0; }
+  .hlp-item .web { font-size: 19px; }
+  .hlp-item .what, .hlp-item .alt2 { font-size: 16px; }
+  .hlp-ecard { padding: 20px 20px 18px; }
+  .hlp-ecard .big { font-size: 42px; }
+  .hlp-who { padding: 22px 20px; }
+  .hlp-who h3 { font-size: 23px; }
+  .hlp-print button { width: 100%; }
+
+  /* Glossary */
+  .glossary-hero { padding: 110px 0 44px; }
+  .section-blurb { margin-left: 0; }
+  .term-practice { flex-direction: column; gap: 5px; }
+  .intro-card { padding: 20px 20px; }
+
+  /* Footer */
+  .footer-links { gap: 14px 20px; flex-wrap: wrap; justify-content: center; }
+  .footer-links a { min-height: 40px; display: inline-flex; align-items: center; }
+  .footer-legal p { font-size: 13px; }
+}
+</style>
 </head>
 <body>
     <!-- ═══════ NAVIGATION ═══════ -->
@@ -847,7 +993,7 @@
 <li><a href="help.html">Helpful Numbers</a></li>
                 <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
             </ul>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">&#9776;</button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Open the menu" aria-expanded="false"><span aria-hidden="true">&#9776;</span><span class="mt-label">Menu</span></button>
             </div>
         </div>
     </nav>
@@ -1144,13 +1290,13 @@
     <!-- ═══════ JAVASCRIPT ═══════ -->
     <script>
         // Mobile nav toggle
-        const toggle = document.getElementById('mobileToggle');
-        const links = document.getElementById('navLinks');
-        toggle.addEventListener('click', () => links.classList.toggle('open'));
-        // Close mobile nav on link click
-        links.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => links.classList.remove('open'));
-        });
+        // Mobile menu is handled by the gg-mobile script at the end of this
+        // page (October 2026). The old handler below toggled the same class,
+        // so leaving both in place cancelled every tap out. Kept as a comment
+        // so it is obvious what replaced it.
+        //   const toggle = document.getElementById('mobileToggle');
+        //   const links = document.getElementById('navLinks');
+        //   toggle.addEventListener('click', () => links.classList.toggle('open'));
         // Navbar scroll effect
         const nav = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -1169,5 +1315,48 @@
             });
         });
     </script>
+
+<!-- Mobile menu behaviour: open/close, ARIA state, close on choosing a link,
+     close on Escape, close on tapping outside. -->
+<script>
+(function () {
+  var btn  = document.getElementById('mobileToggle');
+  var menu = document.getElementById('navLinks');
+  if (!btn || !menu) return;
+
+  function setOpen(open) {
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var lbl = btn.querySelector('.mt-label');
+    if (lbl) lbl.textContent = open ? 'Close' : 'Menu';
+  }
+
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'navLinks');
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!menu.classList.contains('open'));
+  });
+
+  menu.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!menu.classList.contains('open')) return;
+    if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+
+  // If the phone is turned sideways into desktop width, drop the menu state.
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 968) setOpen(false);
+  });
+})();
+</script>
 </body>
 </html>
