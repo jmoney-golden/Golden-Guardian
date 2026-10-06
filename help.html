@@ -801,6 +801,191 @@
       window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
       plausible.init()
     </script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PHONE OPTIMISATION
+     Added October 2026. Everything below sits inside a max-width media
+     query, so the desktop layout above 968px is completely untouched.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<style id="gg-mobile">
+/* The menu label rides inside the hamburger button and only ever shows
+   on a phone, where the button itself is visible. */
+.mt-label { display: none; }
+
+@media (max-width: 968px) {
+
+  /* ── 1. NAVIGATION ───────────────────────────────────────────────────
+     The menu never opened before: .nav-bottom was hidden, and the list of
+     links lives inside it, so toggling .open on the list could not bring
+     back a parent that was display:none. Showing the parent fixes it. */
+  .nav-bottom { display: block !important; width: 100%; }
+  .nav-links  { display: none; }
+
+  nav { position: relative; }
+  .nav-inner { min-height: 58px; padding: 10px 16px; justify-content: center; }
+
+  .mobile-toggle {
+    display: inline-flex !important; align-items: center; gap: 9px;
+    top: 9px; right: 12px;
+    min-height: 44px; padding: 6px 14px;
+    font-size: 23px; line-height: 1;
+    border-radius: 8px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.28);
+  }
+  .mobile-toggle:focus-visible { outline: 4px solid var(--gold-bright); outline-offset: 2px; }
+  .mt-label {
+    display: inline; font-family: var(--font-body);
+    font-size: 15px; font-weight: 600; letter-spacing: .4px;
+  }
+
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--navy);
+    padding: 8px 16px 18px; gap: 0;
+    border-bottom: 3px solid var(--gold-light);
+    box-shadow: 0 18px 44px rgba(0,0,0,.38);
+    z-index: 1200;
+    max-height: calc(100vh - 70px); overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links.open li { width: 100%; }
+  .nav-links.open a {
+    display: flex; align-items: center;
+    min-height: 54px; padding: 10px 6px;
+    font-size: 17px; color: #FFF;
+    border-bottom: 1px solid rgba(255,255,255,.13);
+  }
+  .nav-links.open li:last-child a { border-bottom: 0; }
+  .nav-links.open .nav-cta {
+    justify-content: center; margin-top: 14px;
+    min-height: 56px; font-size: 17px; border-radius: 8px;
+  }
+
+  /* ── 2. GLOBAL PHONE HOUSEKEEPING ────────────────────────────────── */
+  html { -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+  .container { padding-left: 18px; padding-right: 18px; }
+
+  /* 16px is the threshold below which iOS Safari zooms in when a field is
+     tapped. Anything smaller makes the form feel broken on an iPhone. */
+  input, select, textarea { font-size: 16px !important; max-width: 100%; }
+
+  h1, h2, h3 { overflow-wrap: break-word; }
+
+  /* ── 3. HOME PAGE ─────────────────────────────────────────────────── */
+  .trust-items     { grid-template-columns: 1fr 1fr; }
+  .services-grid,
+  .why-grid,
+  .providers-inner,
+  .about-inner,
+  .contact-inner,
+  .form-row        { grid-template-columns: 1fr; }
+  /* the navbar is fixed on desktop, so the logo banner carries an 85px shim.
+     On a phone the navbar is relative, which left that shim as dead space at
+     the very top of every page. */
+  .logo-banner { margin-top: 0; padding: 14px 0 12px; }
+  .logo-banner img { max-height: 84px; width: auto; }
+
+  /* ── 4. HELPFUL NUMBERS ───────────────────────────────────────────── */
+  .hlp-grid, .hlp-ecards { grid-template-columns: 1fr; }
+  .hlp-jump a { min-height: 48px; display: inline-flex; align-items: center; }
+
+  /* ── 5. GLOSSARY ──────────────────────────────────────────────────── */
+  .toolbar { position: static; padding: 18px 0; }
+  .toolbar-inner { flex-direction: column; align-items: stretch; gap: 14px; }
+  .search-wrap { min-width: 0; flex: 1 1 auto; }
+  .jump-list { gap: 7px; }
+  .jump-list a { min-height: 44px; display: inline-flex; align-items: center; }
+  .section-block, .term { scroll-margin-top: 20px; }
+
+  /* ── 6. FREE CLASSES ──────────────────────────────────────────────── */
+  .lrn-vids { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+
+  .container { padding-left: 16px; padding-right: 16px; }
+
+  /* One thumb, one column, one full-width button. */
+  .btn, .hero-buttons .btn, .cta-buttons .btn { width: 100%; justify-content: center; min-height: 54px; }
+  .hero-buttons, .cta-buttons { flex-direction: column; }
+  .about-stats { flex-direction: column; gap: 18px; }
+  .trust-items { grid-template-columns: 1fr 1fr; gap: 22px; }
+
+  /* Helpful Numbers — the numbers themselves stay big and tappable. */
+  .hlp-hero { padding: 44px 0 38px; }
+  .hlp-hero h1 { font-size: 34px; }
+  .hlp-hero .lede { font-size: 18px; }
+  .hlp-jump { flex-direction: column; gap: 10px; }
+  .hlp-jump a { justify-content: center; }
+  .hlp-911 h2 { font-size: 30px; }
+  .hlp-sec > .container > h2 { font-size: 30px; }
+  .hlp-sub { font-size: 17px; }
+  .hlp-item { padding: 18px 18px; }
+  .hlp-item .num { font-size: 27px; }
+  .hlp-item .num a { display: inline-block; padding: 4px 0; }
+  .hlp-item .web { font-size: 19px; }
+  .hlp-item .what, .hlp-item .alt2 { font-size: 16px; }
+  .hlp-ecard { padding: 20px 20px 18px; }
+  .hlp-ecard .big { font-size: 42px; }
+  .hlp-who { padding: 22px 20px; }
+  .hlp-who h3 { font-size: 23px; }
+  .hlp-print button { width: 100%; }
+
+  /* Glossary */
+  .glossary-hero { padding: 110px 0 44px; }
+  .section-blurb { margin-left: 0; }
+  .term-practice { flex-direction: column; gap: 5px; }
+  .intro-card { padding: 20px 20px; }
+
+  /* Footer */
+  .footer-links { gap: 14px 20px; flex-wrap: wrap; justify-content: center; }
+  .footer-links a { min-height: 40px; display: inline-flex; align-items: center; }
+  .footer-legal p { font-size: 13px; }
+}
+</style>
+
+<style id="gg-glp1">
+/* ══ Medicare GLP-1 section (October 2026) ══ */
+.hlp-sec.glp { background: var(--gold-pale); border-top: 5px solid var(--gold-bright);
+  border-bottom: 1px solid #E3D8BC; }
+.hlp-sec.glp .hlp-item { background: var(--white); border-color: #E2D6B6; border-left-color: var(--gold); }
+.hlp-sec.glp .hlp-item.flag { background: #FFFBF0; border-left-color: var(--gold-bright); }
+.hlp-sec.glp .hlp-note { background: var(--white); border-color: var(--gold); }
+.glp-badge { display: inline-block; background: var(--navy); color: var(--gold-bright);
+  font-size: 13px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase;
+  padding: 8px 16px; border-radius: 20px; margin-bottom: 14px; }
+.glp-list { margin: 10px 0 0 22px; }
+.glp-list li { font-size: 17px; line-height: 1.55; margin-bottom: 7px; }
+.glp-list li:last-child { margin-bottom: 0; }
+.hlp-item .what a { color: var(--gold); font-weight: 700; text-decoration: none;
+  border-bottom: 2px solid rgba(151,94,37,.3); }
+.hlp-item .what a:hover { border-bottom-color: var(--gold); }
+.hlp-item .what a:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+.hlp-who.glp-warn { margin: 40px 0 0; background: #5C1D1D; }
+.hlp-who.glp-warn h3 { color: #FFD9A8; }
+.hlp-who.glp-warn p { color: #F2DADA; }
+.hlp-who.glp-warn b { color: var(--white); }
+.hlp-who.glp-warn a { color: #FFD97A; font-weight: 700; }
+
+@media (max-width: 640px) {
+  .glp-badge { font-size: 11.5px; letter-spacing: 1.6px; padding: 7px 13px; }
+  .glp-list { margin-left: 18px; }
+  .glp-list li { font-size: 16px; }
+  .hlp-note { padding: 18px 16px; }
+  .hlp-note p { font-size: 16.5px; }
+  .hlp-who.glp-warn { padding: 20px 18px; }
+}
+@media print {
+  .hlp-sec.glp { background: #FFF !important; border-top: 2px solid #999 !important; }
+  .hlp-who.glp-warn { background: #FFF !important; border: 2px solid #999 !important; }
+  .hlp-who.glp-warn h3, .hlp-who.glp-warn p, .hlp-who.glp-warn b { color: #000 !important; }
+  .glp-badge { background: #FFF !important; color: #000 !important; border: 1px solid #999; }
+}
+</style>
 </head>
 <body>
 <nav id="navbar">
@@ -816,7 +1001,7 @@
 <li><a href="help.html" class="active">Helpful Numbers</a></li>
                 <li><a href="index.html#contact" class="nav-cta">Get in Touch</a></li>
             </ul>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">&#9776;</button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Open the menu" aria-expanded="false"><span aria-hidden="true">&#9776;</span><span class="mt-label">Menu</span></button>
             </div>
         </div>
     </nav><section class="logo-banner">
@@ -944,6 +1129,7 @@
     <p class="lede">Tap any number on a phone to dial it.</p>
     <div class="hlp-jump">
       <a href="#emergency">In an Emergency</a>
+      <a href="#glp1">Weight-Loss Drugs</a>
       <a href="#everyone">For Everyone</a>
       <a href="#veterans">For Veterans &amp; Families</a>
     </div>
@@ -976,7 +1162,7 @@
           feeling overwhelmed all count.</p>
         <ul>
           <li><b>Text</b> any message to 988</li>
-          <li><b>Chat</b> at 988lifeline.org</li>
+          <li><b>Chat</b> at <a href="https://988lifeline.org" target="_blank" rel="noopener">988lifeline.org</a></li>
           <li><b>En español:</b> call 988 and press 2, or text AYUDA to 988</li>
           <li><b>Deaf or hard of hearing:</b> videophone to 988, or dial 711 then 988</li>
         </ul>
@@ -987,8 +1173,9 @@
       <div class="vt">Veterans, service members, and the people who love them</div>
       <div class="big"><a href="tel:988">Dial 988, then press 1</a></div>
       <p><b>Veterans Crisis Line.</b> Text <b>838255</b> · Chat at
-        <b>VeteransCrisisLine.net/Chat</b> · TTY <b>1-800-799-4889</b><br>
-        The older number, <b>1-800-273-8255 and press 1</b>, still works.</p>
+        <b><a href="https://www.veteranscrisisline.net/get-help-now/chat/" target="_blank" rel="noopener">VeteransCrisisLine.net/Chat</a></b>
+        · TTY <b><a href="tel:+18007994889">1-800-799-4889</a></b><br>
+        The older number, <b><a href="tel:+18002738255">1-800-273-8255</a> and press 1</b>, still works.</p>
       <p class="quote">"You don't have to be enrolled in VA benefits or health care to connect."
         The Veterans Crisis Line is for all veterans, no matter your discharge status — and family
         and friends can call about someone they are worried about.</p>
@@ -997,6 +1184,199 @@
 </section>
 
 <!-- ══════════════════ EVERYONE ══════════════════ -->
+<!-- ══════════════════ GLP-1 / WEIGHT-LOSS DRUGS ══════════════════
+     Added October 2026. Everything here was checked against medicare.gov and
+     the CMS Medicare GLP-1 Bridge pages on October 5, 2026. Two things are
+     deliberately left out: TrumpRx dollar prices, which keep moving, and any
+     suggestion that Part D now covers a drug for weight loss. It does not.  -->
+<section class="hlp-sec glp" id="glp1">
+  <div class="container">
+    <div class="glp-badge">New &middot; Updated October 2026</div>
+    <h2>Medicare and the weight-loss drugs</h2>
+    <p class="hlp-sub">Wegovy, Zepbound, Ozempic, Mounjaro. There is a federal program running
+      right now, it is not quite what the headlines say it is, and it has an end date you
+      ought to know about before you start anything.</p>
+
+    <div class="hlp-note">
+      <p><b>The program is called the Medicare GLP-1 Bridge.</b> It began July 1, 2026 and it is
+        scheduled to end <b>December 31, 2027</b>. If you qualify, you pay <b>$50 for a one-month
+        supply</b> of a covered medication.</p>
+      <p><b>Here is the part the headlines leave out.</b> Medicare Part D still cannot cover a drug
+        prescribed for weight loss. That restriction is written into federal law, and only Congress
+        can change it. The Bridge is a temporary program that sits <i>outside</i> your drug plan
+        entirely &mdash; your pharmacy bills it separately, and it will not appear on your Part D
+        statements. Your plan does not have to sign up for it, and which plan you have does not
+        decide whether you qualify.</p>
+      <p>If you take one of these medications for <b>type 2 diabetes</b>, none of this changes
+        anything for you. Part D has always covered that, it still does, and it works the way it
+        always has.</p>
+    </div>
+
+    <div class="hlp-group">
+      <h3>Start here</h3>
+      <div class="hlp-grid">
+
+        <div class="hlp-item flag wide">
+          <div class="name">MEDICARE&rsquo;S OWN PAGE ON THE GLP-1 BRIDGE</div>
+          <div class="web"><a href="https://www.medicare.gov/coverage/weight-loss-drugs" target="_blank" rel="noopener">medicare.gov/coverage/weight-loss-drugs</a></div>
+          <div class="num"><a href="tel:+18006334227">1-800-MEDICARE</a></div>
+          <div class="alt2">1-800-633-4227 &middot; TTY <a href="tel:+18774862048">1-877-486-2048</a>
+            &middot; Open 24 hours a day, 7 days a week</div>
+          <div class="what">The official page, written for you rather than for a pharmacy. It lists the
+            covered drugs, the medical requirements and exactly what the $50 does and does not count
+            toward. <b>Read this before you call anybody who sells something.</b> The detailed rules
+            for pharmacies and prescribers are at
+            <a href="https://www.cms.gov/medicare/coverage/prescription-drug-coverage/medicare-glp-1-bridge" target="_blank" rel="noopener">cms.gov</a>.</div>
+        </div>
+
+        <div class="hlp-item">
+          <div class="name">WHO CAN GET IT</div>
+          <div class="what">You must be 18 or older and meet <b>one</b> of these:
+            <ul class="glp-list">
+              <li>BMI of <b>35 or higher</b>; or</li>
+              <li>BMI of <b>30 or higher</b> plus diastolic heart failure, uncontrolled high blood
+                pressure, or chronic kidney disease; or</li>
+              <li>BMI of <b>27 or higher</b> plus prediabetes, a previous heart attack or stroke,
+                or blocked arteries.</li>
+            </ul>
+            Your doctor has to submit the request and attest to this. <b>Approval is required before
+            the pharmacy can fill it.</b></div>
+        </div>
+
+        <div class="hlp-item">
+          <div class="name">WHAT DISQUALIFIES YOU &mdash; THIS SURPRISES PEOPLE</div>
+          <div class="what">You cannot use the Bridge if you:
+            <ul class="glp-list">
+              <li>have <b>type 2 diabetes</b>;</li>
+              <li>have moderate or severe <b>sleep apnea</b>;</li>
+              <li>have fatty liver disease with significant scarring;</li>
+              <li>are already getting, or have already gotten, a GLP-1 through your Part D plan at any
+                point this year &mdash; for any reason.</li>
+            </ul>
+            If one of those applies, your ordinary Part D coverage is the road to look at instead.
+            That is a conversation worth having before January.</div>
+        </div>
+
+        <div class="hlp-item">
+          <div class="name">WHICH DRUGS ARE ON IT</div>
+          <div class="what">Only three, and one of them only in a particular form:
+            <ul class="glp-list">
+              <li><b>Wegovy</b> &mdash; injection or tablet</li>
+              <li><b>Foundayo</b> &mdash; tablet</li>
+              <li><b>Zepbound KwikPen only</b> &mdash; the single-dose vials and pens are <b>not</b>
+                included, so a prescription written for the wrong form will be turned away</li>
+            </ul>
+            <b>Ozempic and Mounjaro are not on the Bridge.</b> They reach Part D only through
+            diabetes or another approved medical reason.</div>
+        </div>
+
+        <div class="hlp-item flag">
+          <div class="name">THREE THINGS ABOUT THE $50</div>
+          <div class="what">
+            <ul class="glp-list">
+              <li>It is a <b>flat $50 a month</b>, the same in every phase of your drug coverage.</li>
+              <li>It <b>does not count</b> toward your Part D deductible or toward your yearly
+                out-of-pocket limit. None of it.</li>
+              <li><b>Extra Help does not lower it</b>, and manufacturer coupons cannot be used with
+                it. If you have Extra Help, you still pay the full $50.</li>
+            </ul></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hlp-group">
+      <h3>The manufacturers &mdash; and the cash-price route</h3>
+      <div class="hlp-grid">
+
+        <div class="hlp-item">
+          <div class="name">NOVOCARE &mdash; WEGOVY</div>
+          <div class="num"><a href="tel:+18888093942">1-888-809-3942</a></div>
+          <div class="alt2"><a href="https://www.novocare.com/patient/support/navigating-medicare.html" target="_blank" rel="noopener">novocare.com</a>
+            &middot; Weekdays 8am&ndash;8pm Eastern</div>
+          <div class="what">Novo Nordisk&rsquo;s own support line for people on Medicare. They can
+            explain what the Bridge covers for Wegovy and what their cash price is. If you take
+            <b>Ozempic</b>, ring the same number &mdash; but note Ozempic is a diabetes medication,
+            it is not on the Bridge, and it runs through your ordinary Part D coverage instead.
+            <b>Their regular savings card is not available to anyone on Medicare</b> &mdash; that is a
+            rule, not an oversight, so do not be surprised when you are told no.</div>
+        </div>
+
+        <div class="hlp-item">
+          <div class="name">LILLYDIRECT &mdash; ZEPBOUND AND MOUNJARO</div>
+          <div class="num"><a href="tel:+18445593471">1-844-559-3471</a></div>
+          <div class="alt2"><a href="https://www.lilly.com/lillydirect" target="_blank" rel="noopener">lilly.com/lillydirect</a>
+            &middot; Medical questions: <a href="tel:+18005455979">1-800-545-5979</a></div>
+          <div class="what">Eli Lilly&rsquo;s direct pharmacy and support line. Same idea: they can tell
+            you the cash price and help sort out which form of Zepbound you have been prescribed.</div>
+        </div>
+
+        <div class="hlp-item wide">
+          <div class="name">TRUMPRX &mdash; THE GOVERNMENT&rsquo;S CASH-PRICE SITE</div>
+          <div class="web"><a href="https://trumprx.gov" target="_blank" rel="noopener">trumprx.gov</a></div>
+          <div class="what">A federal website that shows cash prices and hands you a coupon, then sends
+            you to the manufacturer to buy. <b>It is not a pharmacy and it does not sell anything
+            itself.</b> Anyone can use it, Medicare or not. Prices change, so look them up rather than
+            trusting a number you read somewhere.
+            <br><br><b>The catch, and it is a real one:</b> paying cash means you are buying outside
+            your insurance. Not one dollar of it counts toward your Part D deductible or your yearly
+            out-of-pocket limit. If you take expensive medications and you were going to reach that
+            limit anyway, <b>paying cash can leave you worse off by the end of the year.</b> Work the
+            arithmetic before you switch, or call me and we will work it together.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hlp-group">
+      <h3>Free help, from people selling nothing</h3>
+      <div class="hlp-grid">
+
+        <div class="hlp-item">
+          <div class="name">EXTRA HELP WITH DRUG COSTS &mdash; SOCIAL SECURITY</div>
+          <div class="num"><a href="tel:+18007721213">1-800-772-1213</a></div>
+          <div class="alt2">TTY <a href="tel:+18003250778">1-800-325-0778</a> &middot;
+            <a href="https://www.ssa.gov/medicare/part-d-extra-help" target="_blank" rel="noopener">ssa.gov/medicare/part-d-extra-help</a></div>
+          <div class="what">Lowers what you pay for your Part D medications if your income is limited.
+            Most people who qualify never apply. <b>It will not lower the $50 Bridge copay</b> &mdash;
+            but it can make a real difference to everything else in your medicine cabinet.</div>
+        </div>
+
+        <div class="hlp-item flag">
+          <div class="name">SHIP &mdash; A FREE SECOND OPINION</div>
+          <div class="web"><a href="https://www.shiphelp.org" target="_blank" rel="noopener">shiphelp.org</a></div>
+          <div class="alt2">
+            Tennessee <a href="tel:+18778010044">1-877-801-0044</a> &nbsp;&middot;&nbsp;
+            Alabama <a href="tel:+18002435463">1-800-243-5463</a><br>
+            Texas (ask for HICAP) <a href="tel:+18002529240">1-800-252-9240</a><br>
+            Elsewhere: national referral line
+            <a href="tel:+18778392675">1-877-839-2675</a>, weekdays
+          </div>
+          <div class="what">Trained counselors, free, and <b>they sell nothing at all.</b> If you want
+            somebody with no stake in your decision to walk through the Bridge rules with you, this is
+            who to call.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hlp-who glp-warn">
+      <h3>Before you start: the date at the end of this</h3>
+      <p>The Bridge is scheduled to stop on <b>December 31, 2027</b>, and at the moment there is nothing
+        lined up to replace it. A separate program that was meant to carry this forward inside Part D
+        was <b>put on hold in April 2026 with no new start date</b>.</p>
+      <p>So go in with your eyes open. Nobody can promise you what a month of this medication will cost
+        in January 2028, and these are not drugs most people want to stop abruptly.
+        <b>Talk it through with your doctor before you begin</b>, and ask what the plan is if the
+        program is not renewed.</p>
+      <p>Questions about how any of this fits your own coverage? Call me at
+        <a href="tel:+18445344678">844-534-4678</a> (TTY 711). Calling this number will connect you
+        with a licensed insurance agent.</p>
+    </div>
+
+  </div>
+</section>
+
 <section class="hlp-sec" id="everyone">
   <div class="container">
     <h2>For everyone</h2>
@@ -1011,7 +1391,7 @@
         <div class="hlp-item">
           <div class="name">MEDICARE</div>
           <div class="num"><a href="tel:+18006334227">1-800-MEDICARE</a></div>
-          <div class="alt2">1-800-633-4227 · TTY 1-877-486-2048 · medicare.gov</div>
+          <div class="alt2">1-800-633-4227 · TTY <a href="tel:+18774862048">1-877-486-2048</a> · <a href="https://www.medicare.gov" target="_blank" rel="noopener">medicare.gov</a></div>
           <div class="what">Coverage questions, claims, replacement cards, and reporting Medicare
             fraud. Open 24 hours a day, 7 days a week.</div>
         </div>
@@ -1019,7 +1399,7 @@
         <div class="hlp-item">
           <div class="name">SOCIAL SECURITY ADMINISTRATION</div>
           <div class="num"><a href="tel:+18007721213">1-800-772-1213</a></div>
-          <div class="alt2">TTY 1-800-325-0778 · ssa.gov · Weekdays 8am–7pm</div>
+          <div class="alt2">TTY <a href="tel:+18003250778">1-800-325-0778</a> · <a href="https://www.ssa.gov" target="_blank" rel="noopener">ssa.gov</a> · Weekdays 8am–7pm</div>
           <div class="what"><b>This is where you enroll in Medicare Part B</b> — not Medicare.
             Also handles Extra Help with prescription drug costs.</div>
         </div>
@@ -1028,20 +1408,29 @@
           <div class="name">SHIP — FREE, UNBIASED MEDICARE COUNSELING</div>
           <div class="web"><a href="https://www.shiphelp.org" target="_blank" rel="noopener">shiphelp.org</a></div>
           <div class="alt2">
-            Tennessee <a href="tel:+18778010044">1-877-801-0044</a> (TTY 1-800-848-0299)<br>
+            Tennessee <a href="tel:+18778010044">1-877-801-0044</a> (TTY <a href="tel:+18008480299">1-800-848-0299</a>)<br>
             Alabama <a href="tel:+18002435463">1-800-243-5463</a> &nbsp;·&nbsp;
             Texas <a href="tel:+18002529240">1-800-252-9240</a><br>
-            National line <a href="tel:+18778392675">1-877-839-2675</a>
+            Live somewhere else? National referral line
+            <a href="tel:+18778392675">1-877-839-2675</a>, weekdays
           </div>
           <div class="what">State Health Insurance Assistance Program. Trained counselors, free,
             and <b>they sell nothing at all.</b> If you want a second opinion on anything you heard
-            in one of our classes, this is where to get it.</div>
+            in one of our classes, this is where to get it.
+            <br><br><b>Call your own state&rsquo;s number first</b> &mdash; that is where the
+            counselors actually are. The national line is a referral desk: they will look up your
+            local office and hand you the number, but they do not give advice themselves, and they
+            only answer on weekdays. If you cannot get through during open enrollment, call
+            <a href="tel:+18006334227">1-800-MEDICARE</a>, which answers 24 hours a day.
+            <br><br>In Texas the same service goes by a different name &mdash; <b>HICAP</b>, the
+            Health Information, Counseling and Advocacy Program. Ask for that rather than
+            &ldquo;SHIP&rdquo; and you will get where you are going faster.</div>
         </div>
 
         <div class="hlp-item">
           <div class="name">MEDICARE RIGHTS CENTER</div>
           <div class="num"><a href="tel:+18003334114">1-800-333-4114</a></div>
-          <div class="alt2">medicareinteractive.org · Weekdays</div>
+          <div class="alt2"><a href="https://www.medicareinteractive.org" target="_blank" rel="noopener">medicareinteractive.org</a> · Weekdays</div>
           <div class="what">An independent nonprofit — <b>not a government agency.</b> Good for
             payment denials, appeals, and complaints about care or billing.</div>
         </div>
@@ -1106,7 +1495,7 @@
         <div class="hlp-item">
           <div class="name">SENIOR MEDICARE PATROL — MEDICARE FRAUD</div>
           <div class="num"><a href="tel:+18778082468">877-808-2468</a></div>
-          <div class="alt2">smpresource.org · Weekdays 9am–5:30pm Eastern</div>
+          <div class="alt2"><a href="https://www.smpresource.org" target="_blank" rel="noopener">smpresource.org</a> · Weekdays 9am–5:30pm Eastern</div>
           <div class="what">Free local help reading your Medicare statements and spotting billing
             you never received.</div>
         </div>
@@ -1194,7 +1583,7 @@
         <div class="hlp-item">
           <div class="name">ELDERCARE LOCATOR</div>
           <div class="num"><a href="tel:+18006771116">1-800-677-1116</a></div>
-          <div class="alt2">eldercare.acl.gov · You can also text this number</div>
+          <div class="alt2"><a href="https://eldercare.acl.gov" target="_blank" rel="noopener">eldercare.acl.gov</a> · You can also text this number</div>
           <div class="what">Connects you to <b>your local Area Agency on Aging</b> — rides, meals,
             in-home help, and someone who will sit with you and fill out forms.</div>
         </div>
@@ -1254,7 +1643,7 @@
         <div class="hlp-item">
           <div class="name">VA HEALTH BENEFITS HELP LINE</div>
           <div class="num"><a href="tel:+18772228387">1-877-222-8387</a></div>
-          <div class="alt2">1-877-222-VETS · va.gov · Weekdays 8am–8pm Eastern</div>
+          <div class="alt2">1-877-222-VETS · <a href="https://www.va.gov" target="_blank" rel="noopener">va.gov</a> · Weekdays 8am–8pm Eastern</div>
           <div class="what">Enrollment, your <b>priority group</b>, community care, and whether you
             qualify at all. If you do not know your priority group, they will tell you on the phone.</div>
         </div>
@@ -1295,7 +1684,7 @@
         <div class="hlp-item">
           <div class="name">TRICARE FOR LIFE — WPS GOVERNMENT SERVICES</div>
           <div class="num"><a href="tel:+18667730404">1-866-773-0404</a></div>
-          <div class="alt2">tricare.mil · U.S. and U.S. territories</div>
+          <div class="alt2"><a href="https://www.tricare.mil" target="_blank" rel="noopener">tricare.mil</a> · U.S. and U.S. territories</div>
           <div class="what">Claims, coverage and eligibility questions. <b>TRICARE For Life requires
             both Medicare Part A and Part B</b> — drop Part B and TRICARE ends entirely, pharmacy
             included.</div>
@@ -1304,7 +1693,7 @@
         <div class="hlp-item flag">
           <div class="name">DEERS — THE ELIGIBILITY DATABASE</div>
           <div class="num"><a href="tel:+18005389552">1-800-538-9552</a></div>
-          <div class="alt2">TTY 1-866-363-2883 · milconnect.dmdc.osd.mil · idco.dmdc.osd.mil</div>
+          <div class="alt2">TTY <a href="tel:+18663632883">1-866-363-2883</a> · <a href="https://milconnect.dmdc.osd.mil" target="_blank" rel="noopener">milconnect.dmdc.osd.mil</a> · <a href="https://idco.dmdc.osd.mil" target="_blank" rel="noopener">idco.dmdc.osd.mil</a></div>
           <div class="what"><b>If TRICARE ever tells you that you are not eligible, call here before
             you believe it.</b> A death, marriage, divorce or move that was never recorded looks
             exactly like lost coverage. Surviving spouses are hit hardest, and it is often fixed in
@@ -1330,7 +1719,7 @@
         <div class="hlp-item">
           <div class="name">CHAMPVA</div>
           <div class="num"><a href="tel:+18007338387">1-800-733-8387</a></div>
-          <div class="alt2">va.gov · Weekdays 8:05am–7:30pm Eastern</div>
+          <div class="alt2"><a href="https://www.va.gov" target="_blank" rel="noopener">va.gov</a> · Weekdays 8:05am–7:30pm Eastern</div>
           <div class="what">Covers the <b>spouse or child</b> of a veteran — not the veteran, who
             uses VA health care. If you are eligible for Medicare, CHAMPVA requires both Part A and
             Part B.</div>
@@ -1412,13 +1801,13 @@
         </div>
     </footer><script>
         // Mobile nav toggle
-        const toggle = document.getElementById('mobileToggle');
-        const links = document.getElementById('navLinks');
-        toggle.addEventListener('click', () => links.classList.toggle('open'));
-        // Close mobile nav on link click
-        links.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => links.classList.remove('open'));
-        });
+        // Mobile menu is handled by the gg-mobile script at the end of this
+        // page (October 2026). The old handler below toggled the same class,
+        // so leaving both in place cancelled every tap out. Kept as a comment
+        // so it is obvious what replaced it.
+        //   const toggle = document.getElementById('mobileToggle');
+        //   const links = document.getElementById('navLinks');
+        //   toggle.addEventListener('click', () => links.classList.toggle('open'));
         // Navbar scroll effect
         const nav = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -1437,5 +1826,48 @@
             });
         });
     </script>
+
+<!-- Mobile menu behaviour: open/close, ARIA state, close on choosing a link,
+     close on Escape, close on tapping outside. -->
+<script>
+(function () {
+  var btn  = document.getElementById('mobileToggle');
+  var menu = document.getElementById('navLinks');
+  if (!btn || !menu) return;
+
+  function setOpen(open) {
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var lbl = btn.querySelector('.mt-label');
+    if (lbl) lbl.textContent = open ? 'Close' : 'Menu';
+  }
+
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'navLinks');
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!menu.classList.contains('open'));
+  });
+
+  menu.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!menu.classList.contains('open')) return;
+    if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+
+  // If the phone is turned sideways into desktop width, drop the menu state.
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 968) setOpen(false);
+  });
+})();
+</script>
 </body>
 </html>
