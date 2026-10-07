@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get in Touch | Golden Guardian Insurance</title>
+<meta name="description" content="Request a consultation with Golden Guardian Insurance. Licensed in Tennessee, Texas and Alabama.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://www.goldenguardian.org/index.html">
+
+<!-- Fallback for anyone with JavaScript switched off. The script below runs
+     first in every normal browser and carries the ad's tracking tags across;
+     this meta refresh only fires if that never happens. -->
+<noscript><meta http-equiv="refresh" content="0; url=index.html#formCard"></noscript>
+
+<style>
+  html,body{height:100%;margin:0}
+  body{
+    background:#1F2767;color:#fff;
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:24px;line-height:1.6;
+  }
+  .wrap{max-width:420px}
+  .mark{
+    font-family:"EB Garamond",Georgia,serif;font-size:27px;font-weight:700;
+    color:#FDC722;letter-spacing:.5px;margin-bottom:14px;
+  }
+  p{color:#C9CFEA;font-size:17px;margin:0 0 22px}
+  a.go{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:54px;padding:14px 30px;
+    background:#FDC722;color:#131641;
+    font-size:17px;font-weight:700;text-decoration:none;
+    border-radius:9px;border-bottom:4px solid #D9A400;
+  }
+  a.tel{display:block;margin-top:20px;color:#FDC722;font-size:16px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mark">Golden Guardian Insurance</div>
+    <p>Taking you to the form&hellip;</p>
+    <a class="go" id="go" href="index.html#formCard">Request a Consultation</a>
+    <a class="tel" href="tel:+18445344678">Or call 844-534-4678 (TTY 711)</a>
+  </div>
+
+<script>
+// Send the visitor straight to the contact form, carrying any tracking tags
+// from the ad across so the visit is still attributed correctly in analytics.
+(function () {
+  var target = 'index.html' + (window.location.search || '') + '#formCard';
+  document.getElementById('go').setAttribute('href', target);
+  // replace() keeps this page out of the back-button history, so "back"
+  // returns the visitor to Facebook rather than bouncing them in a loop.
+  window.location.replace(target);
+})();
+</script>
+</body>
+</html>
