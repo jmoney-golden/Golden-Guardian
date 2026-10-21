@@ -804,9 +804,9 @@
             padding-top: 28px;
         }
         .footer-legal p {
-            font-size: 13px;
+            font-size: 14px;
             line-height: 1.7;
-            color: rgba(255,255,255,0.55);
+            color: rgba(255,255,255,0.72);
             margin-bottom: 12px;
             max-width: 1000px;
         }
@@ -974,7 +974,58 @@
   /* Footer */
   .footer-links { gap: 14px 20px; flex-wrap: wrap; justify-content: center; }
   .footer-links a { min-height: 40px; display: inline-flex; align-items: center; }
-  .footer-legal p { font-size: 13px; }
+  .footer-legal p { font-size: 14px; }
+}
+</style>
+
+<style id="gg-consent">
+/* Contact preference and consent block — October 2026 */
+.gg-opt { font-weight: 400; color: var(--gray-500); }
+
+.gg-leadnote {
+  background: #F4F5FB; border-left: 4px solid var(--navy);
+  border-radius: 0 8px 8px 0; padding: 14px 16px; margin: 4px 0 22px;
+  font-size: 14.5px; line-height: 1.6; color: var(--gray-700);
+}
+
+.gg-pref { border: 0; padding: 0; margin: 0 0 22px; }
+.gg-pref legend {
+  padding: 0; margin-bottom: 10px;
+  font-size: 14px; font-weight: 600; color: var(--gray-700);
+}
+.gg-radio {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 52px; padding: 8px 14px; margin-bottom: 8px;
+  border: 2px solid var(--gray-200); border-radius: 8px;
+  font-size: 16px; color: var(--gray-700);
+  cursor: pointer; transition: border-color .15s, background .15s;
+}
+.gg-radio:hover { border-color: var(--gold-light); background: #FFFDF6; }
+.gg-pref .gg-radio:last-of-type { margin-bottom: 0; }  /* catch-all sits tight against the consent box */
+.gg-radio input { width: 22px; height: 22px; accent-color: var(--navy); flex: 0 0 22px; margin: 0; }
+.gg-radio:has(input:checked) { border-color: var(--navy); background: #F4F5FB; }
+.gg-radio input:focus-visible { outline: 3px solid var(--gold-bright); outline-offset: 2px; }
+
+.gg-consent {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; margin-bottom: 20px;
+  border: 2px solid var(--gray-200); border-radius: 8px;
+  font-size: 13.5px; line-height: 1.6; color: var(--gray-700); cursor: pointer;
+}
+.gg-consent input { width: 22px; height: 22px; accent-color: var(--navy); flex: 0 0 22px; margin: 2px 0 0; }
+.gg-consent b { color: var(--navy); }
+.gg-consent input:focus-visible { outline: 3px solid var(--gold-bright); outline-offset: 2px; }
+
+.gg-tpmo {
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gray-200);
+  font-size: 14px; line-height: 1.55; color: var(--gray-500); text-align: center;
+}
+.gg-tpmo a { color: var(--gold); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .gg-radio { min-height: 56px; font-size: 16.5px; }
+  .gg-consent { font-size: 14px; }
+  .gg-leadnote { font-size: 15px; }
 }
 </style>
 </head>
@@ -1225,8 +1276,8 @@
                                 <input type="email" id="email" name="email" required placeholder="john@example.com">
                             </div>
                             <div class="form-group">
-                                <label for="homePhone">Phone Number *</label>
-                                <input type="tel" id="homePhone" name="homePhone" required placeholder="(615) 555-0123">
+                                <label for="homePhone">Phone number <span class="gg-opt" id="ggPhoneOpt">(only if you'd like us to call or text)</span></label>
+                                <input type="tel" id="homePhone" name="homePhone" placeholder="(615) 555-0123">
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
@@ -1234,13 +1285,16 @@
                                     <input type="text" id="zip" name="zip" placeholder="37201" maxlength="10">
                                 </div>
                                 <div class="form-group">
-                                    <label for="interest">I'm Interested In</label>
-                                    <select id="interest" name="custom_I'm Interested In...">
+                                    <label for="interest">What can we help with? *</label>
+                                    <select id="interest" name="custom_I'm Interested In..." required aria-required="true">
                                         <option value="">Select one...</option>
-                                        <option value="Medicare Guidance">Medicare Guidance</option>
+                                        <option value="New to Medicare / turning 65">New to Medicare / turning 65</option>
+                                        <option value="Medicare Advantage (Part C)">Medicare Advantage (Part C)</option>
+                                        <option value="Medicare drug coverage (Part D)">Medicare drug coverage (Part D)</option>
+                                        <option value="Medicare Supplement (Medigap)">Medicare Supplement (Medigap)</option>
                                         <option value="ACA Marketplace Plans">ACA Marketplace Plans</option>
                                         <option value="Provider Partnerships">Provider Partnerships</option>
-                                        <option value="Other/Not Sure">Other/Not Sure</option>
+                                        <option value="Not sure - help me figure it out">Not sure &mdash; help me figure it out</option>
                                     </select>
                                 </div>
                             </div>
@@ -1248,8 +1302,64 @@
                             <div aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
                                 <input type="text" name="_Website" id="ab_hp_field" tabindex="-1" autocomplete="off" value="">
                             </div>
+
+                            <!-- ═══ CONTACT PREFERENCE, CONSENT AND REQUIRED DISCLOSURES ═══
+                                 Added 21 Oct 2026. The lead-generation disclosure is required
+                                 electronically at the point of collection by 42 CFR
+                                 422.2274(g)(3)(i)(C). The consent checkbox carries the four
+                                 elements of 47 CFR 64.1200(f)(9) and must stay unchecked by
+                                 default and optional to submit. If the wording below changes,
+                                 bump GG_CONSENT_VERSION in the script at the end of this page
+                                 so old consent records still point at the text people saw. -->
+
+                            <div class="gg-leadnote">
+                                By submitting this form, your information will be provided to a
+                                licensed insurance agent who will contact you about Medicare plan options.
+                            </div>
+
+                            <fieldset class="gg-pref">
+                                <legend>How would you like us to reach you? *</legend>
+                                <label class="gg-radio">
+                                    <input type="radio" name="custom_Contact Preference" value="Call me" required aria-required="true">
+                                    <span>Call me</span>
+                                </label>
+                                <label class="gg-radio">
+                                    <input type="radio" name="custom_Contact Preference" value="Text me">
+                                    <span>Text me</span>
+                                </label>
+                                <label class="gg-radio">
+                                    <input type="radio" name="custom_Contact Preference" value="Email me">
+                                    <span>Email me</span>
+                                </label>
+                                <label class="gg-radio">
+                                    <input type="radio" name="custom_Contact Preference" value="Any of these is fine">
+                                    <span>Any of these is fine</span>
+                                </label>
+                            </fieldset>
+
+                            <label class="gg-consent">
+                                <input type="checkbox" id="ggContactConsent" required aria-required="true">
+                                <span id="ggConsentText">I give <b>Golden Guardian Insurance</b> and its licensed agents
+                                permission to contact me about Medicare plan options using the method I selected
+                                above. This permission is good for 12 months, and I can withdraw it at any time by
+                                telling them to stop.<span id="ggTextTerms" hidden> I agree they may send text
+                                messages to the mobile number I entered above. Message and data rates may apply,
+                                and I can reply STOP to any text to end them.</span></span>
+                            </label>
+
+                            <!-- The consent record. Never shown; filled in on submit. -->
+                            <input type="hidden" name="custom_Contact Permission" id="ggConsentFlag" value="No">
+                            <input type="hidden" name="custom_Consent Text Version" value="GGI-CONSENT-2026-10-21-v3">
+                            <input type="hidden" name="custom_Consent Text Shown" id="ggConsentShown" value="">
+                            <input type="hidden" name="custom_Consent Timestamp" id="ggConsentTime" value="">
+                            <input type="hidden" name="custom_Permission Expires" id="ggPtcExpires" value="">
+                            <input type="hidden" name="custom_Landing Page URL" id="ggLandingUrl" value="">
+
                             <button type="submit" class="form-submit">Send My Information &#8594;</button>
-                            <div class="form-disclaimer">By submitting, you consent to being contacted by Golden Guardian Insurance. We respect your privacy and will never share your information.</div>
+                            <div class="form-disclaimer">We will contact you only about the coverage you asked about above,
+                                and your permission to be contacted is good for 12 months. We will not sell or share
+                                your information with any other marketing organization.</div>
+                            <div class="gg-tpmo">We do not offer every plan available in your area. Currently we represent 6 organizations which offer 44 products in your area. Please contact <a href="https://www.medicare.gov" target="_blank" rel="noopener">Medicare.gov</a> or <a href="tel:+18006334227">1&#8209;800&#8209;MEDICARE</a> to get information on all of your options.</div>
                         </form>
                     </div>
                 </div>
@@ -1279,7 +1389,7 @@
 
                 <p><strong>Golden Guardian Insurance is not affiliated with or endorsed by Medicare, the Centers for Medicare &amp; Medicaid Services, or any government agency.</strong></p>
 
-                <p>We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1&#8209;800&#8209;MEDICARE (1&#8209;800&#8209;633&#8209;4227), 24 hours a day / 7 days a week, or your State Health Insurance Assistance Program, to get information on all of your options.</p>
+                <p>We do not offer every plan available in your area. Currently we represent 6 organizations which offer 44 products in your area. Please contact <a href="https://www.medicare.gov" target="_blank" rel="noopener">Medicare.gov</a> or <a href="tel:+18006334227">1&#8209;800&#8209;MEDICARE</a> to get information on all of your options.</p>
 
                 <p>Our free community classes are educational events. <strong>They are for educational purposes only, and no plan&#8209;specific benefits or details are discussed at them.</strong> Nothing is sold at an educational event. Details and schedule at <a href="learn.html">goldenguardian.org/learn</a>.</p>
 
@@ -1356,6 +1466,90 @@
   window.addEventListener('resize', function () {
     if (window.innerWidth > 968) setOpen(false);
   });
+})();
+</script>
+
+<!-- Records what the visitor actually agreed to. Proving consent later means
+     proving what this page said on the day they submitted, so the wording is
+     versioned and the version travels with the lead. Bump GG_CONSENT_VERSION
+     whenever the checkbox wording changes. -->
+<script>
+(function () {
+  var GG_CONSENT_VERSION = 'GGI-CONSENT-2026-10-21-v3';
+  var form = document.querySelector('#contact form');
+  if (!form) return;
+
+  var box     = document.getElementById('ggContactConsent');
+  var shown   = document.getElementById('ggConsentShown');
+  var phone   = document.getElementById('homePhone');
+  var optHint = document.getElementById('ggPhoneOpt');
+  var textTs  = document.getElementById('ggTextTerms');
+  var prefs   = form.querySelectorAll('[name="custom_Contact Preference"]');
+
+  // Methods that need a number.  "Email me" is the only one that does not.
+  var NEEDS_PHONE = { 'Call me': 1, 'Text me': 1, 'Any of these is fine': 1 };
+  var NEEDS_TEXT  = { 'Text me': 1, 'Any of these is fine': 1 };
+
+  function chosen() {
+    for (var i = 0; i < prefs.length; i++) {
+      if (prefs[i].checked) return prefs[i].value;
+    }
+    return '';
+  }
+
+  // The DNC rule wants a signed writing that includes the number, so the
+  // number stops being optional as soon as a phone-based method is picked.
+  function syncMethod() {
+    var v = chosen();
+    var needPhone = !!NEEDS_PHONE[v];
+    var needText  = !!NEEDS_TEXT[v];
+
+    if (phone) {
+      phone.required = needPhone;
+      if (needPhone) { phone.setAttribute('aria-required', 'true'); }
+      else           { phone.removeAttribute('aria-required'); }
+    }
+    if (optHint) {
+      optHint.textContent = needPhone
+        ? '*'
+        : "(only if you'd like us to call or text)";
+    }
+    if (textTs) { textTs.hidden = !needText; }
+  }
+
+  for (var i = 0; i < prefs.length; i++) {
+    prefs[i].addEventListener('change', syncMethod);
+  }
+  syncMethod();
+  var flag    = document.getElementById('ggConsentFlag');
+  var stamp   = document.getElementById('ggConsentTime');
+  var expires = document.getElementById('ggPtcExpires');
+  var url     = document.getElementById('ggLandingUrl');
+
+  function record() {
+    var now = new Date();
+    if (flag)  flag.value  = (box && box.checked) ? 'Yes' : 'No';
+    // The strongest consent record is the wording the person actually saw,
+    // captured as rendered rather than reconstructed later from a version tag.
+    if (shown) {
+      var t = document.getElementById('ggConsentText');
+      shown.value = t ? t.innerText.replace(/\s+/g, ' ').trim().slice(0, 900) : '';
+    }
+    if (stamp) stamp.value = now.toISOString();
+    if (url)   url.value   = window.location.href.slice(0, 500);
+    if (expires) {
+      // CMS treats a request for information as good for 12 months, and only
+      // for the product line the person named. After this date, contacting
+      // them is cold calling again.
+      var e = new Date(now.getTime());
+      e.setFullYear(e.getFullYear() + 1);
+      expires.value = e.toISOString().slice(0, 10);
+    }
+  }
+
+  record();                       // sensible values even if JS later fails
+  form.addEventListener('change', record);
+  form.addEventListener('submit', record);
 })();
 </script>
 </body>
