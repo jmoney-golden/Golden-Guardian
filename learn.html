@@ -944,7 +944,7 @@
   /* Footer */
   .footer-links { gap: 14px 20px; flex-wrap: wrap; justify-content: center; }
   .footer-links a { min-height: 40px; display: inline-flex; align-items: center; }
-  .footer-legal p { font-size: 13px; }
+  .footer-legal p { font-size: 14px; }
 }
 </style>
 
@@ -1035,6 +1035,45 @@
   .lrn-form { padding: 18px 16px; }
   .lrn-tap, .lrn-submit { width: 100%; justify-content: center; text-align: center; }
 }
+</style>
+<style id="gg-footer-legal">
+/* Styling for the compliance block added to the footer, October 2026.
+   Matches index.html and glossary.html so the four pages read identically. */
+.footer-legal {
+    border-top: 1px solid rgba(255,255,255,0.14);
+    margin-top: 32px;
+    padding-top: 28px;
+    text-align: left;
+}
+.footer-legal p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 12px;
+    max-width: 1000px;
+}
+.footer-legal p:last-child { margin-bottom: 0; }
+.footer-legal strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+.footer-legal a { color: var(--gold-bright); }
+.footer-access {
+    background: rgba(255,255,255,0.06);
+    border-left: 4px solid var(--gold-bright);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+}
+.footer-access p { color: rgba(255,255,255,0.8); font-size: 14px; margin: 0; }
+</style>
+<style id="gg-learn-consent">
+/* The form sits on a light panel, so this is dark text on light — not the
+   white-on-navy treatment used in the page footer. */
+.lrn-tpmo {
+  margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid #E5E7EB;
+  font-size: 14px; line-height: 1.55;
+  color: #6B7280; text-align: center;
+}
+.lrn-tpmo a { color: #975E25; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -1446,7 +1485,7 @@
           <div class="lrn-cbox">
             <input type="checkbox" id="cbPTC" value="1"
                    name="custom_I give permission to contact me by email">
-            <label for="cbPTC">I give Golden Guardian Insurance permission to contact me by email about Medicare Advantage plan options.
+            <label for="cbPTC"><span id="lrnConsentText">I give Golden Guardian Insurance permission to contact me by email about Medicare plan options.</span>
               <small>I understand this is entirely optional, that it is not required to attend any class, and that I can withdraw permission at any time.</small>
             </label>
           </div>
@@ -1459,8 +1498,21 @@
           <input type="text" name="_Website" id="_Website" tabindex="-1" autocomplete="off" value="">
         </div>
 
+        <!-- The consent record. Never shown; filled in on submit.
+             Permission Expires is left blank unless the box is actually
+             ticked, so the record never implies a permission that was
+             not given. -->
+        <input type="hidden" name="custom_Contact Permission"   id="lrnFlag"     value="No">
+        <input type="hidden" name="custom_Consent Text Version" value="GGI-LEARN-2026-10-21-v1">
+        <input type="hidden" name="custom_Consent Text Shown"   id="lrnShown"    value="">
+        <input type="hidden" name="custom_Consent Timestamp"    id="lrnStamp"    value="">
+        <input type="hidden" name="custom_Permission Expires"   id="lrnExpires"  value="">
+        <input type="hidden" name="custom_Landing Page URL"     id="lrnUrl"      value="">
+
         <button class="lrn-submit" type="submit" aria-describedby="invalidMessage">Send it to me</button>
         <p class="lrn-formnote">You can unsubscribe from anything, any time, with one click.</p>
+
+        <div class="lrn-tpmo">We do not offer every plan available in your area. Currently we represent 6 organizations which offer 44 products in your area. Please contact <a href="https://www.medicare.gov" target="_blank" rel="noopener">Medicare.gov</a> or <a href="tel:+18006334227">1&#8209;800&#8209;MEDICARE</a> to get information on all of your options.</div>
       </form>
     </div>
   </div>
@@ -1488,6 +1540,20 @@
 <li><a href="help.html">Helpful Numbers</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
                 </ul>
+            </div>
+
+            <div class="footer-legal">
+                <div class="footer-access">
+                    <p><strong>Deaf or hard of hearing?</strong> Dial <strong>711</strong> to reach the free national relay service and an operator will connect you to us at 844-534-4678. For accommodations of persons with special needs at meetings, call 844-534-4678 (TTY 711).</p>
+                </div>
+
+                <p><strong>Golden Guardian Insurance is not affiliated with or endorsed by Medicare, the Centers for Medicare &amp; Medicaid Services, or any government agency.</strong></p>
+
+                <p>We do not offer every plan available in your area. Currently we represent 6 organizations which offer 44 products in your area. Please contact <a href="https://www.medicare.gov" target="_blank" rel="noopener">Medicare.gov</a> or <a href="tel:+18006334227">1&#8209;800&#8209;MEDICARE</a> to get information on all of your options.</p>
+
+                <p>Our free community classes are educational events. <strong>They are for educational purposes only, and no plan&#8209;specific benefits or details are discussed at them.</strong> Nothing is sold at an educational event. Details and schedule at <a href="learn.html">goldenguardian.org/learn</a>.</p>
+
+                <p>Golden Guardian Insurance is a licensed insurance agency, licensed in Tennessee, Texas and Alabama. Enrollment in a plan may be limited to certain times of the year unless you qualify for a Special Enrollment Period.</p>
             </div>
         </div>
     </footer>
@@ -1776,6 +1842,50 @@
     img.addEventListener('error', fail);
     if (img.complete && img.naturalWidth === 0) fail();
   });
+})();
+</script>
+<!-- Records WHAT the registrant agreed to, not merely that they did.
+     The wording is captured as rendered, so the record survives any later
+     edit to the sentence above. -->
+<script>
+(function () {
+  var form = document.querySelector('.lrn-form, form[action*="webToLead"]');
+  if (!form) return;
+
+  var box     = document.getElementById('cbPTC');
+  var text    = document.getElementById('lrnConsentText');
+  var flag    = document.getElementById('lrnFlag');
+  var shown   = document.getElementById('lrnShown');
+  var stamp   = document.getElementById('lrnStamp');
+  var expires = document.getElementById('lrnExpires');
+  var url     = document.getElementById('lrnUrl');
+
+  function record() {
+    var ticked = !!(box && box.checked);
+    var now = new Date();
+
+    if (flag)  flag.value  = ticked ? 'Yes' : 'No';
+    if (stamp) stamp.value = now.toISOString();
+    if (url)   url.value   = window.location.href.slice(0, 500);
+    if (shown) shown.value = ticked && text
+          ? text.innerText.replace(/\s+/g, ' ').trim().slice(0, 900) : '';
+
+    // CMS treats a request for information as good for 12 months and only for
+    // the product line named. No tick, no permission, so no expiry date.
+    if (expires) {
+      if (ticked) {
+        var e = new Date(now.getTime());
+        e.setFullYear(e.getFullYear() + 1);
+        expires.value = e.toISOString().slice(0, 10);
+      } else {
+        expires.value = '';
+      }
+    }
+  }
+
+  record();
+  form.addEventListener('change', record);
+  form.addEventListener('submit', record);
 })();
 </script>
 </body>
